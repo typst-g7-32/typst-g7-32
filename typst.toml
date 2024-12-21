@@ -1,0 +1,23 @@
+[package]
+name = "typst-g7-32"
+version = "0.0.1"
+entrypoint = "src/lib.typ"
+authors = ["Forgenet"]
+license = "MIT"
+description = "GOST 7.32-2017 template"
+repository = "https://github.com/f0rgenet/typst-g7-32"
+keywords = ["gost", "7.32", "2017", "science"]
+categories = ["cv"]
+exclude = [
+	".github",
+	"docs",
+	"scripts",
+	"tests",
+	".typstignore",
+	"Justfile",
+]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "template.png"

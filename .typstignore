@@ -1,0 +1,5 @@
+.github
+scripts
+tests
+docs/*
+!docs/*.pdf

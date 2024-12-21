@@ -1,0 +1,25 @@
+name: Build and Release Typst Document
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile Typst document
+        uses: docker://ghcr.io/typst/typst:latest
+        with:
+          args: compile example.typ example.pdf
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: example.pdf
+          generate_release_notes: true
