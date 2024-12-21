@@ -1,12 +1,18 @@
 #let indent = 1.25cm
 #let text_size = 14pt
 
+// TODO: Подтягивать особое форматирование заголовка при обычном вводе (=Введение) или выделить под специальные части содержания отдельные функции?
+#let service_headings = ("введение", "заключение")
+
+#let service-heading = it => {
+  set align(center)
+  upper(it)
+}
+
 #let default = body => {
   set page(
     margin: (left: 30mm, right: 15mm, top: 20mm, bottom: 20mm)
   )
-  
-  set heading(numbering: "1.1.")
 
   set text(
     font: "Times New Roman",
@@ -15,14 +21,23 @@
     hyphenate: false
   )
 
+  set heading("1.1")
+  // TODO: Исплючить сервисные заголовки из нумерации
+
   show heading: it => {
     // TODO: Исправить расстояние снизу
     set text(size: text_size)
     set block(above: 1.25cm, below: 0.75cm)
-    pad(left: indent, it)
+    if (not it.outlined or (lower(it.body.text) in service_headings and it.level == 1)) {
+      service-heading(it)
+    } else {
+      pad(left: indent, it)
+    }
     ""
     v(-1cm)
   }
+
+  set outline(indent: auto)
 
   set par(
     justify: true,
