@@ -17,9 +17,27 @@ jobs:
         with:
           args: compile example.typ example.pdf
 
+      - name: Copy PDF for preview
+        run: |
+          mkdir -p preview
+          cp example.pdf preview/latest.pdf
+
+      - name: Commit preview PDF
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add preview/latest.pdf
+          git commit -m "Update preview PDF" || echo "No changes to commit"
+          git push
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
           files: example.pdf
+          body: |
+            ### Preview
+            You can preview this release's PDF [here](https://github.com/${{ github.repository }}/blob/main/preview/latest.pdf)
+
+            ### Release Notes
           generate_release_notes: true
