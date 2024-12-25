@@ -52,13 +52,16 @@
       ОТЧЕТ \ О НАУЧНО ИСЛЕДОВАТЕЛЬСКОЙ РАБОТЕ \ по теме: \ #title
   ]
 
-  v(15%)
+  v(20%)
 
   table(
-      columns: (2fr, 1fr, 2fr, 1fr),
-      [#director_job], [], [], table.cell(align: bottom)[#director_full_name],
-      [], [], table.cell(align: center)[#small-text[подпись, дата]], []
+    stroke: none,
+    align: bottom,
+    columns: (35%, 5%, 1fr, 5%, 20%),
+    [#director_job], [], [], [], [#director_full_name],
+    table.hline(start: 2, end: 3),
+    [], [], table.cell(align: center)[#small-text[подпись, дата]], [],
   )
 
-  pagebreak(weak: true)
+  pagebreak()
 }
