@@ -1,15 +1,12 @@
-name: Build and Release Typst Document
+name: Build and Preview Typst Document
 
 on:
   push:
     branches:
       - main
-    tags:
-      - '**'
 
 jobs:
   build_and_preview:
-    if: github.event_name == 'push' && github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -23,77 +20,13 @@ jobs:
 
       - name: Copy PDF for preview
         run: |
-          mkdir -p preview
-          cp example.pdf preview/latest.pdf
+          mkdir -p assets/preview
+          cp example.pdf assets/preview/latest.pdf
 
       - name: Commit preview PDF
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -f preview/latest.pdf
-          git commit -m "Update preview PDF" || echo "No changes to commit"
-          git push origin HEAD:${{ github.ref_name }}
-
-  build_and_release:
-    if: github.event_name == 'push' && github.ref_type == 'tag'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Compile Typst document
-        uses: docker://ghcr.io/typst/typst:latest
-        with:
-          args: compile example.typ example.pdf
-
-      - name: Copy PDF for preview
-        run: |
-          mkdir -p preview
-          cp example.pdf preview/latest.pdf
-
-      - name: Commit preview PDF
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -f preview/latest.pdf
-          git commit -m "Update preview PDF" || echo "No changes to commit"
-          git push origin HEAD:${{ github.head_ref }} # Use head_ref for push branches
-
-  build_and_release:
-    if: github.event_name == 'push' && github.ref_type == 'tag'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Compile Typst document
-        uses: docker://ghcr.io/typst/typst:latest
-        with:
-          args: compile example.typ example.pdf
-
-      - name: Copy PDF for preview
-        run: |
-          mkdir -p preview
-          cp example.pdf preview/latest.pdf
-
-      - name: Commit preview PDF to Main
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -f preview/latest.pdf
+          git add -f assets/preview/latest.pdf
           git commit -m "Update preview PDF" || echo "No changes to commit"
           git push origin HEAD:main
-
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: example.pdf
-          body: |
-            ### Preview
-            You can preview this release's PDF [here](https://github.com/${{ github.repository }}/blob/main/preview/latest.pdf)
-
-            ### Release Notes
-          generate_release_notes: true
