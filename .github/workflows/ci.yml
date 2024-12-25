@@ -17,7 +17,7 @@ jobs:
       - name: Compile Typst document
         uses: docker://ghcr.io/typst/typst:latest
         with:
-          args: compile --root . template/main.typ template/main.pdf
+          args: compile --root . --font-path /fonts/ template/main.typ template/main.pdf
 
       - name: Create preview directory
         run: mkdir -p assets/preview
