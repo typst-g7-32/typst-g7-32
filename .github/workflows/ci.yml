@@ -17,12 +17,12 @@ jobs:
       - name: Compile Typst document to PDF
         uses: docker://ghcr.io/typst/typst:latest
         with:
-          args: compile --root . --font-path /fonts/ template/main.typ template/main.pdf
+          args: compile --root . --font-path fonts/ template/main.typ template/main.pdf
 
       - name: Compile Typst document to PNG
         uses: docker://ghcr.io/typst/typst:latest
         with:
-          args: compile --root . --font-path /fonts/ template/main.typ template/preview.png --format png --pages 1 --ppi 300
+          args: compile --root . --font-path fonts/ template/main.typ template/preview.png --format png --pages 1 --ppi 300
 
       - name: Create preview directory
         run: mkdir -p assets/preview
