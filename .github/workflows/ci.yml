@@ -14,10 +14,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Compile Typst document
+      - name: Compile Typst document to PDF
         uses: docker://ghcr.io/typst/typst:latest
         with:
           args: compile --root . --font-path /fonts/ template/main.typ template/main.pdf
+
+      - name: Compile Typst document to PNG
+        uses: docker://ghcr.io/typst/typst:latest
+        with:
+          args: compile --root . --font-path /fonts/ template/main.typ template/preview.png --format png --pages 1 --ppi 300
 
       - name: Create preview directory
         run: mkdir -p assets/preview
@@ -25,16 +30,19 @@ jobs:
       - name: Copy PDF for preview
         run: cp template/main.pdf assets/preview/latest.pdf
 
+      - name: Copy PNG for preview
+        run: cp template/preview.png assets/preview/latest.png
+
       - name: Configure Git
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Add and Commit preview PDF
+      - name: Add and Commit preview files
         run: |
-          git add assets/preview/latest.pdf
+          git add assets/preview/latest.pdf assets/preview/latest.png
           if ! git diff --cached --quiet; then
-            git commit -m "Update preview PDF"
+            git commit -m "Update preview PDF and PNG"
             echo "::set-output name=commit_made::true"
           else
             echo "::set-output name=commit_made::false"
@@ -42,6 +50,6 @@ jobs:
           fi
         id: commit_check
 
-      - name: Push preview PDF
+      - name: Push preview files
         if: steps.commit_check.outputs.commit_made == 'true'
         run: git push origin HEAD:main
