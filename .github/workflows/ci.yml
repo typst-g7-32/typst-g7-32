@@ -9,6 +9,8 @@ on:
       - 'src/**'
       - 'fonts/**'
       - 'assets/utils/**'
+      - '.github/workflows/**'
+      - 'assets/utils/**'
 
 jobs:
   build_and_preview:
@@ -19,47 +21,46 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Compile Typst document to PDF
-        uses: docker://ghcr.io/typst/typst:latest
-        with:
-          args: compile --root . --font-path fonts/ template/main.typ template/main.pdf
-
-      - name: Compile Typst document to PNG
-        uses: docker://ghcr.io/typst/typst:latest
-        with:
-          args: compile --root . --font-path fonts/ template/main.typ template/preview.png --format png --pages 1 --ppi 300
-
-      - name: Compile Source Typst document to PNG
-        uses: docker://ghcr.io/typst/typst:latest
-        with:
-          args: compile ./assets/utils/render-source.typ assets/preview/source.png --format png --root . --pages 1 --ppi 300
-
-      - name: Create preview directory
-        run: mkdir -p assets/preview
-
-      - name: Copy PDF for preview
-        run: cp template/main.pdf assets/preview/latest.pdf
-
-      - name: Copy PNG for preview
-        run: cp template/preview.png assets/preview/latest.png
-
       - name: Configure Git
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
 
-      - name: Add and Commit preview files
-        run: |
-          git add assets/preview/latest.pdf assets/preview/latest.png assets/preview/source.png
-          if ! git diff --cached --quiet; then
-            git commit -m "Update preview PDF and PNG"
-            echo "::set-output name=commit_made::true"
-          else
-            echo "::set-output name=commit_made::false"
-            echo "No changes to commit"
-          fi
-        id: commit_check
+      - name: Create temporary directory
+        run: mkdir -p preview_assets
 
-      - name: Push preview files
-        if: steps.commit_check.outputs.commit_made == 'true'
-        run: git push origin HEAD:main
+      - name: Compile Typst document to PDF
+        uses: docker://ghcr.io/typst/typst:latest
+        with:
+          args: compile --root . --font-path fonts/ template/main.typ preview_assets/main.pdf
+
+      - name: Compile Typst document to PNG
+        uses: docker://ghcr.io/typst/typst:latest
+        with:
+          args: compile --root . --font-path fonts/ template/main.typ preview_assets/preview.png --format png --pages 1 --ppi 300
+
+      - name: Compile source Typst document to PNG
+        uses: docker://ghcr.io/typst/typst:latest
+        with:
+          args: compile ./assets/utils/render-source.typ preview_assets/source.png --format png --root . --pages 1 --ppi 300
+      
+      - name: Stash preview_assets
+        run: |
+          git add -f preview_assets/*
+          git stash push preview_assets
+
+      - name: Switch to preview branch
+        run: |
+          git switch --orphan preview
+
+      - name: Unstash and unpack preview_assets
+        run: |
+          git stash pop
+          mv preview_assets/* ./
+          git rm -rf preview_assets
+
+      - name: Commit and Push preview files
+        run: |
+          git add -f *
+          git commit -m "Update preview assets"
+          git push -f origin preview

@@ -1,11 +1,16 @@
 ## Предпросмотр
 <p align="center">
-    <a href="assets/preview/latest.pdf">
-        <img src="assets/preview/latest.png" alt="Preview" width="500">
+    <a href="template/main.typ">
+        <img src="https://github.com/F0rgenet/typst-g7-32/blob/preview/source.png" alt="Source" width="48%">
+    </a>
+    <a href="blob/preview/main.pdf">
+        <img src="https://github.com/F0rgenet/typst-g7-32/blob/preview/preview.png" alt="Preview" width="48%">
     </a>
 </p>
 
-Последняя версия документа [latest.pdf](assets/preview/latest.pdf)
+Исходный код: [main.typ](template/main.typ)
+
+Результат: [latest.pdf](assets/preview/latest.pdf)
 
 ## Информация
 [ГОСТ 7.32-2017](assets/ГОСТ%207.32-2017.pdf)
