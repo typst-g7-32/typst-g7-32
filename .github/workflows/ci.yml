@@ -11,22 +11,37 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Compile Typst document
         uses: docker://ghcr.io/typst/typst:latest
         with:
-          args: compile example.typ example.pdf
+          args: compile --root . template/main.typ template/main.pdf
+
+      - name: Create preview directory
+        run: mkdir -p assets/preview
 
       - name: Copy PDF for preview
-        run: |
-          mkdir -p assets/preview
-          cp example.pdf assets/preview/latest.pdf
+        run: cp template/main.pdf assets/preview/latest.pdf
 
-      - name: Commit preview PDF
+      - name: Configure Git
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -f assets/preview/latest.pdf
-          git commit -m "Update preview PDF" || echo "No changes to commit"
-          git push origin HEAD:main
+
+      - name: Add and Commit preview PDF
+        run: |
+          git add assets/preview/latest.pdf
+          if ! git diff --cached --quiet; then
+            git commit -m "Update preview PDF"
+            echo "::set-output name=commit_made::true"
+          else
+            echo "::set-output name=commit_made::false"
+            echo "No changes to commit"
+          fi
+        id: commit_check
+
+      - name: Push preview PDF
+        if: steps.commit_check.outputs.commit_made == 'true'
+        run: git push origin HEAD:main
