@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'template/**'
+      - 'src/**'
+      - 'fonts/**'
 
 jobs:
   build_and_preview:
