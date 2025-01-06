@@ -1,3 +1,4 @@
+![Workflow Status](https://github.com/F0rgenet/typst-g7-32/actions/workflows/ci.yml/badge.svg)
 ## Предпросмотр
 <p align="center">
     <a href="template/main.typ">
