@@ -3,7 +3,7 @@
 #let indent = 1.25cm
 #let text_size = 14pt
 
-#let gost-style = body => {
+#let gost-style(year: none, city: "", body) = {
   set page(
     margin: (left: 30mm, right: 15mm, top: 20mm, bottom: 20mm)
   )
@@ -24,9 +24,8 @@
   
   set page(footer: context [
       #let page = here().page()
-      #let current_year = datetime.today()
       #align(center)[
-          #if page == 1 {"Москва " + current_year.display("[year]")} else {page}
+          #if page == 1 {city + " " + year} else {page}
       ]
   ])
   

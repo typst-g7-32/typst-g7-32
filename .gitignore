@@ -1,4 +1,12 @@
 *.pdf
 *.png
+
+tests/**/out/**
+tests/**/diff/**
+
 !assets/**/*.pdf
 !assets/**/*.png
+
+!tests/**/*.png
+tests/**/out/**/*.png
+tests/**/diff/**/*.png

@@ -3,7 +3,7 @@
     <a href="template/main.typ">
         <img src="https://github.com/F0rgenet/typst-g7-32/blob/preview/source.png" alt="Source" width="48%">
     </a>
-    <a href="blob/preview/main.pdf">
+    <a href="https://github.com/F0rgenet/typst-g7-32/blob/preview/main.pdf">
         <img src="https://github.com/F0rgenet/typst-g7-32/blob/preview/preview.png" alt="Preview" width="48%">
     </a>
 </p>
