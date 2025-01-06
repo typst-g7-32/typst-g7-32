@@ -1,4 +1,4 @@
-name: Build and Preview Typst Document
+name: Continuous Integration
 
 on:
   push:
@@ -13,6 +13,54 @@ on:
       - 'assets/utils/**'
 
 jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Probe runner package cache
+        uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: imagemagick cargo
+          version: 1.0
+
+      - name: Install oxipng from crates.io
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: oxipng
+
+      - name: Install just from crates.io
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: just
+
+      - name: Install typst-test from github
+        uses: baptiste0928/cargo-install@v3
+        with:
+          crate: typst-test
+          git: https://github.com/tingerrr/typst-test.git
+          tag: ci-semi-stable
+
+      - name: Setup typst
+        id: setup-typst
+        uses: typst-community/setup-typst@v3
+
+      - name: Run test suite
+        run: typst-test run
+
+      - name: Archive diffs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: typst-diffs
+          path: |
+            tests/**/diff/*.png
+            tests/**/out/*.png
+            tests/**/ref/*.png
+          retention-days: 5
+
+
   build_and_preview:
     runs-on: ubuntu-latest
     permissions:
