@@ -1,4 +1,4 @@
-#import "../style.typ": small-text
+#import "../style.typ": sign-field
 
 #let format-name(name) = {
     return name.replace(" ", "\u{00A0}")
@@ -8,8 +8,8 @@
   institution: "",
   udk: "",
   gos-no: "",
-  inventar-no: "",
-  approved_by: (name:"", position: ""),
+  inventory-no: "",
+  approval: (name: "", position: "", year: none),
   report_type: "",
   about: "", 
   part: 1, // TODO: Выполнить
@@ -21,7 +21,12 @@
   manager: (position:"", name: ""),
   city: "",
   year: none,
+  performer: none,
 ) = {
+    if "year" not in approval.keys() {
+        approval.year = year
+    }
+
     align(center)[#institution]
 
     v(25pt)
@@ -30,13 +35,13 @@
         align(left)[
             #if udk != none [УДК: #udk #linebreak()]
             #if gos-no != none [Рег. №: #gos-no #linebreak()]
-            #if inventar-no != none [Рег. № ИКРБС: #inventar-no #linebreak()]
+            #if inventory-no != none [Рег. № ИКРБС: #inventory-no #linebreak()]
         ],
     ) 
 
     v(15pt)
 
-    if approved_by.name != none and approved_by.position != none {
+    if approval.name != none and approval.position != none {
         align(right)[
             #block(
                 width: 250pt,
@@ -46,10 +51,10 @@
                     inset: (x: 0%),
                     columns: (auto, 5fr, 2fr, 1fr, auto, 5fr),
                     table.cell(colspan: 6)[УТВЕРЖДАЮ],
-                    table.cell(colspan: 6)[#approved_by.position],
-                    table.cell(colspan: 4)[], table.cell(colspan: 2, align: right)[#format-name(approved_by.name)],
+                    table.cell(colspan: 6)[#approval.position],
+                    table.cell(colspan: 4)[], table.cell(colspan: 2, align: right)[#format-name(approval.name)],
                     table.hline(start: 0, end: 4),
-                    table.cell(align: right)[«], [], table.cell(align: left)[»], [], [], table.cell(align: right)[#year],
+                    table.cell(align: right)[«], [], table.cell(align: left)[»], [], [], table.cell(align: right)[#approval.year],
                     table.hline(start: 1, end: 2), table.hline(start: 3, end: 5)
                 )
             )
@@ -67,15 +72,12 @@
 
     v(20%)
 
+    if performer != none {
+        sign-field(performer.at("name"), performer.at("position"))
+    }
+
     if manager.name != none and manager.position != none {
-        table(
-            stroke: none,
-            align: bottom,
-            columns: (35%, 5%, 1fr, 5%, 20%),
-            [#manager.position], [], [], [], [#format-name(manager.name)],
-            table.hline(start: 2, end: 3),
-            [], [], table.cell(align: center)[#small-text[подпись, дата]], []
-        )
+        sign-field(manager.at("name"), manager.at("position"))
     }
 
     pagebreak(weak: true)
