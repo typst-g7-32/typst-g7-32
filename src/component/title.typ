@@ -1,35 +1,65 @@
 #import "../style.typ": sign-field
+#import "../utils.typ": fetch-field, unbreak-name
+#import "performers.typ": performers-page
 
-#let format-name(name) = {
-    return name.replace(" ", "\u{00A0}")
+
+#let detailed-sign-field(title, name, position, year) = {
+    table(
+        stroke: none,
+        align: left,
+        inset: (x: 0%),
+        columns: (8pt, 1fr, 8pt, 10pt, 2fr, auto, 25pt),
+        table.cell(colspan: 7)[#upper(title)],
+        table.cell(colspan: 7)[#position],
+        table.cell(colspan: 5)[], table.cell(colspan: 2, align: right)[#unbreak-name(name)],
+        table.hline(start: 0, end: 5),
+        table.cell(align: right)[«], [], table.cell(align: left)[»], [], [], [], table.cell(align: right)[#year],
+        table.hline(start: 1, end: 2), table.hline(start: 4, end: 6)
+    )
 }
 
-#let title(
-  institution: "",
-  udk: "",
-  gos-no: "",
-  inventory-no: "",
-  approval: (name: "", position: "", year: none),
-  report_type: "",
-  about: "", 
-  part: 1, // TODO: Выполнить
+#let title-element(
+  ministry-name: none,
+  organization: (full: none, short: none),
+  udk: none,
+  gos-no: none,
+  inventory-no: none,
+  approved-by: (name: none, position: none, year: none),
+  agreed-by: (name: none, position: none, year: none),
+  report-type: none,
+  about: none, 
   bare-subject: false,
-  subject: "",
-  is-annotacion: false, // TODO: Выполнить
-  stage: (num: 1, type: "промежуточный"), // TODO: Выполнить
-  code: "", // TODO: Выполнить
-  manager: (position:"", name: ""),
-  city: "",
+  research: none,
+  subject: none,
+  stage: (type: none, num: none),
+  part: none,
+  manager: (position: none, name: none),
+  city: none,
   year: none,
   performer: none,
 ) = {
-    if "year" not in approval.keys() {
-        approval.year = year
+    organization = fetch-field(organization, ("full*", "short"), "организации")
+    approved-by = fetch-field(approved-by, ("name", "position", "year"), "утверждения")
+    agreed-by = fetch-field(agreed-by, ("name", "position", "year"), "согласования")
+    stage = fetch-field(stage, ("type", "num"), "этапа")
+    manager = fetch-field(manager, ("position", "name"), "руководителя")
+
+    if "year" not in approved-by.keys() {
+        approved-by
+.year = year
     }
 
-    align(center)[#institution]
+    // TODO: Заменить на шаблон
 
-    v(25pt)
+    align(center)[
+        #ministry-name
+        #linebreak()
+        #upper(organization.full)
+        #linebreak()
+        (#upper(organization.short))
+    ]
+
+    v(15pt)
     
     grid(
         align(left)[
@@ -41,44 +71,101 @@
 
     v(15pt)
 
-    if approval.name != none and approval.position != none {
-        align(right)[
-            #block(
-                width: 250pt,
-                table(
-                    stroke: none,
-                    align: left,
-                    inset: (x: 0%),
-                    columns: (auto, 5fr, 2fr, 1fr, auto, 5fr),
-                    table.cell(colspan: 6)[УТВЕРЖДАЮ],
-                    table.cell(colspan: 6)[#approval.position],
-                    table.cell(colspan: 4)[], table.cell(colspan: 2, align: right)[#format-name(approval.name)],
-                    table.hline(start: 0, end: 4),
-                    table.cell(align: right)[«], [], table.cell(align: left)[»], [], [], table.cell(align: right)[#approval.year],
-                    table.hline(start: 1, end: 2), table.hline(start: 3, end: 5)
-                )
-            )
-        ]
-    } else {
-        v(94pt)
-    }
+    grid(
+        columns: (1fr, 1fr),
+        align: (left, right),
+        gutter: 20%,
+        if approved-by.name != none [
+            #detailed-sign-field("согласовано", approved-by.name, approved-by.position, approved-by.year)
+        ],
+        if agreed-by.name != none [
+            #detailed-sign-field("утверждаю", agreed-by.name, agreed-by.position, agreed-by.year)
+        ],
+    )
 
-    v(25pt)
+    v(30pt)
 
+    align(center)[#{
+        upper(report-type)
+        linebreak()
+        upper(about)
+        if research != "" {
+            linebreak()
+            [#research]
+        }
+        linebreak()
+        if not bare-subject {
+            [по теме:]
+        }
+        linebreak()
+        upper(subject)
+        if stage != (type: none, num: none) {
+            linebreak()
+            [(#stage.type]
+            if stage.num != none {
+                [, этап #stage.num]
+            }
+            [)]
+        }
+        if part != none {
+            linebreak()
+            linebreak()
+            [Книга #part]
+        }
+    }]
 
-    align(center)[
-        #upper(report_type) \ #upper(about) \ #{if not bare-subject {"по теме:"}} \ #upper(subject)
-    ]
-
-    v(20%)
+    v(16%)
 
     if performer != none {
         sign-field(performer.at("name"), performer.at("position"))
     }
 
-    if manager.name != none and manager.position != none {
+    if manager.name != none {
         sign-field(manager.at("name"), manager.at("position"))
     }
 
     pagebreak(weak: true)
+}
+
+#let title-with-boilerplate(document-info) = {
+    // TODO: Вынести список исполнителей и содержание, чтобы при выключении титульника они не пропадали
+
+    let title-performer = none
+    if document-info.performers.len() == 1 { // 5.2.2
+        title-performer = document-info.performers.at(0)
+    }
+    
+    let title-info = (:)
+    for (key, value) in document-info {
+        if key != "performers" { title-info.insert(key, value) }
+    }
+    title-info.insert("performer", title-performer)
+    title-element(..title-info)
+
+    if title-performer == none and document-info.performers.len() > 0 {
+      performers-page(document-info.performers)
+    }
+
+    context if query(selector(heading)).len() > 0 {
+      outline()
+    }
+}
+
+#let title-templates = (
+    default: "default",
+    mai-university-lab: "mai-university-lab", 
+)
+
+#let title-template(template, body, ..arguments) = context {
+  let document-info = query(<document-info>)
+  assert(document-info.len() != 0, message: "В документе отсутствует информация о структуре заголовка, добавьте #show gost.with ...")
+  assert(document-info.len() == 1, message: "В документе не должно быть более одной информации о структуре заголовка, возможно вы несколько раз продублировали команду #show gost.with ...")
+  [#metadata(none) <gost-template-used>]
+  if template == none {
+
+  } else if template == title-templates.default {
+    title-with-boilerplate(document-info.first().value)
+  }
+  // TODO: Подключать шаблоны
+  body
 }
