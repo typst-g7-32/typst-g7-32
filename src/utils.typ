@@ -3,7 +3,7 @@
   let required-keys = expected-keys.filter(key => key.at(-1) == "*").map(key => key.slice(0, -1))
   let not-required-keys = expected-keys.filter(key => key.at(-1) != "*")
 
-  if type(field) == "dictionary" {
+  if type(field) == dictionary {
     for key in required-keys {
       assert(key in field.keys(), message: "В словаре " + help-text + " отсутствует обязательный ключ '" + key + "'")
     }
@@ -17,7 +17,7 @@
     return result
   }
 
-  else if type(field) == "array" {
+  else if type(field) == array {
     assert(field.len() >= required-keys.len(), message: "В списке " + help-text + " указаны не все обязательные элементы: " + repr(required-keys))
     assert(field.len() <= expected-keys.len(), message: "В списке " + help-text + " указано слишком много аргументов, требуемые: " + repr(expected-keys))
     let result = (:)
@@ -27,18 +27,18 @@
     return result
   }
 
-  else if type(field) == "string" {
+  else if type(field) == string {
     let result = clean-exptected-keys.map(key => (key, none)).to-dict()
     result.insert(clean-exptected-keys.at(0), field)
     return result
   }
 
-  else if type(field) == "none" {
+  else if type(field) == none {
     return clean-exptected-keys.map(key => (key, none)).to-dict()
   }
 
   else {
-    panic("Некорректный тип поля " + type(field) + " используйте словарь, список или строку для значения " + help-text)
+    panic("Некорректный тип поля " + repr(type(field)) + "(" + repr(field) + ") используйте словарь, список или строку для значения " + help-text)
   }
 }
 

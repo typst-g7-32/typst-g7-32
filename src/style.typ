@@ -40,10 +40,10 @@
   )
   
   set page(footer: context [
-      #let page = here().page()
-      #align(center)[
-          #if page == 1 {[#city #year]} else {page}
-      ]
+    #let page = here().page()
+    #align(center)[
+        #if page == 1 {[#city #year]} else {page}
+    ]
   ])
   
   show: headings(text-size, indent)

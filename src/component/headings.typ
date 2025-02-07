@@ -28,8 +28,6 @@
 #let headings(text_size, indent) = body => {
   let structural-heading = structural-heading-titles.values().fold(selector, (acc, i) => acc.or(heading.where(body: i, level: 1)))
   
-  // TODO: Проверять дубликаты сервисных заголовков и выдавать предупреждение: context query(heading).filter(value => {value.body in service_headings})
-  
   set heading(numbering: "1.1")
 
   show heading: it => {
