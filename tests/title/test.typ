@@ -1,4 +1,4 @@
-#import "../../src/export.typ": gost, title, title-templates
+#import "../../src/export.typ": gost
 
 #show: gost.with(
   ministry: "Министерство образования и науки Российской Федерации
@@ -29,5 +29,3 @@
   year: 2021,
   force-outline: true,
 )
-
-#show: title.with(title-templates.default)

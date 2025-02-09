@@ -33,5 +33,5 @@
   for performer in performers {
     sign-field(performer.at("name"), performer.at("position"))
   }
-  pagebreak()
+  pagebreak(weak: true)
 }
