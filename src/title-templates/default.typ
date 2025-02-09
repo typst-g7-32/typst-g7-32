@@ -1,5 +1,5 @@
-#import "utils.typ": detailed-sign-field
-#import "../style.typ": sign-field
+#import "../component/title.typ": detailed-sign-field
+#import "../utils.typ": sign-field
 
 #let template(
     ministry: none,
@@ -86,7 +86,7 @@
 
     v(16%)
 
-    if performer != none { // TODO: Указать как исполнителя 
+    if performer != none { // TODO: Указать как исполнителя
         sign-field(performer.at("name"), performer.at("position"))
     }
 

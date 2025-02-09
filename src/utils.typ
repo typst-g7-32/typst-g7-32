@@ -1,3 +1,5 @@
+#import "style.typ": small-text
+
 #let fetch-field(field, expected-keys, help-text) = {
   let clean-exptected-keys = expected-keys.map(key => key.replace("*", ""))
   let required-keys = expected-keys.filter(key => key.at(-1) == "*").map(key => key.slice(0, -1))
@@ -44,4 +46,15 @@
 
 #let unbreak-name(name) = {
     return name.replace(" ", "\u{00A0}")
+}
+
+#let sign-field(name, position, details: "подпись, дата") = {
+  return table(
+    stroke: none,
+    align: bottom,
+    columns: (35%, 5%, 1fr, 5%, 20%),
+    [#position], [], [], [], [#unbreak-name(name)],
+    table.hline(start: 2, end: 3),
+    [], [], table.cell(align: center)[#small-text[#details]], []
+  )
 }

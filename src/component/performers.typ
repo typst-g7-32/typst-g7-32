@@ -1,5 +1,5 @@
 #import "headings.typ": structural-headings
-#import "../style.typ": sign-field
+#import "../utils.typ": sign-field
 
 #let validate-performer(performer, index) = {
   // TODO: Добавить поддержку списка

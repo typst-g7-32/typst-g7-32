@@ -1,20 +1,8 @@
 #import "component/headings.typ": headings
-#import "utils.typ": unbreak-name
 
 #let small-text = body => {
   set text(size: 10pt)
   body
-}
-
-#let sign-field(name, position, details: "подпись, дата") = {
-  return table(
-    stroke: none,
-    align: bottom,
-    columns: (35%, 5%, 1fr, 5%, 20%),
-    [#position], [], [], [], [#unbreak-name(name)],
-    table.hline(start: 2, end: 3),
-    [], [], table.cell(align: center)[#small-text[#details]], []
-  )
 }
 
 #let indent = 1.25cm
