@@ -17,7 +17,7 @@
     performers-page(arguments.performers)
   }
 
-  context if (counter(page).final().first() >= 10 or arguments.force-outline) and query(selector(heading)).len() > 0 {
+  context if (counter(page).final().first() >= 10 or arguments.force-outline) and query(selector(heading)).len() > 0 and query(<abstract>).len() == 0 {
     outline()
   }
 }
@@ -48,6 +48,8 @@
   if year == auto {
     year = int(datetime.today().display("[year]"))
   }
+
+  [#metadata(force-outline) <force-outline>]
 
   show: gost-style.with(year: year, city: city)
 

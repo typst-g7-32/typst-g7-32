@@ -1,4 +1,4 @@
-#import "headings.typ": structural-headings
+#import "headings.typ": structural-heading-titles
 #import "../utils.typ": sign-field
 
 #let validate-performer(performer, index) = {
@@ -29,7 +29,7 @@
 }
 
 #let performers-page(performers) = {
-  structural-headings.performers
+  heading(structural-heading-titles.performers, outlined: false)
   for performer in performers {
     sign-field(performer.at("name"), performer.at("position"))
   }

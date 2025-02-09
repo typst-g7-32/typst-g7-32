@@ -13,8 +13,7 @@
 )
 
 #let service-heading = it => {  
-  set align(center)
-  upper(it)
+  align(center)[#upper(it)]
 }
 
 #let structural-headings = {
