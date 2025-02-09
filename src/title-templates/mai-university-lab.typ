@@ -86,7 +86,7 @@
 
     v(16%)
 
-    if performer != none { // TODO: Указать как исполнителя
+    if performer != none {
         sign-field(performer.at("name"), performer.at("position"))
     }
 
