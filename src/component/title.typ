@@ -1,6 +1,5 @@
 #import "../utils.typ": fetch-field, unbreak-name
-#import "performers.typ": performers-page
-#import "../component/performers.typ": fetch-performers
+#import "performers.typ": performers-page, fetch-performers
 
 #let detailed-sign-field(title, name, position, year) = {
     table(
