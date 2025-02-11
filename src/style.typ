@@ -1,4 +1,4 @@
-#import "component/headings.typ": headings
+#import "component/headings.typ": headings, structural-heading-titles
 
 #let small-text = body => {
   set text(size: 10pt)
@@ -14,7 +14,6 @@
   )
 
   set text(
-    font: "Times New Roman",
     size: text-size,
     lang: "ru",
     hyphenate: false
@@ -33,6 +32,8 @@
         #if page == 1 {[#city #year]} else {page}
     ]
   ])
+
+  set bibliography(style: "gost-r-705-2008-numeric", title: structural-heading-titles.references)
   
   show: headings(text-size, indent)
   body
