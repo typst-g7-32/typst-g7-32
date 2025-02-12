@@ -4,7 +4,7 @@
 #let validate-performer(performer, index) = {
   // TODO: Добавить поддержку списка
   if type(performer) == array {
-    assert(performer.len() == 3, message: "Список исполнителя должен состоять  или трех значений: имя исполнителя; его позиция; является ли он соисполнителем")
+    assert(performer.len() == 3 or performer.len() == 4, message: "Список исполнителя должен состоять  или трех значений: имя исполнителя, его позиция; является ли он соисполнителем")
   } else {
     assert(type(performer) == "dictionary", message: "Тип исполнителя должен быть словарем с полями 'name', 'position' и 'co-performer'")
     assert("name" in performer.keys(), message: "Отсутствует поле 'name' у исполнителя " + repr(index+1))
@@ -18,8 +18,8 @@
     for (i, performer) in performers.enumerate() {
       validate-performer(performer, i)
       if type(performer) == "array" {
-        let (name, position, co-performer) = performers.at(i)
-        performers.at(i) = (name: name, position: position, co-performer: co-performer)
+        let (name, position, co-performer, part) = performers.at(i)
+        performers.at(i) = (name: name, position: position, co-performer: co-performer, part:part)
       }
     }
     return performers
@@ -36,17 +36,18 @@
     co-performers.push(performer.co-performer)
   }
   let contains-co-performers = true in co-performers
+  heading(structural-heading-titles.performers, outlined: false)
 
   for performer in performers {
     if performer.co-performer {continue}
-    sign-field(performer.at("name"), performer.at("position"))
+    sign-field(performer.at("name"), performer.at("position"), performer.at("part"))
   }
 
   if contains-co-performers {
     [Соисполнители:]
     for performer in performers {
       if not performer.co-performer {continue}
-      sign-field(performer.at("name"), performer.at("position"))
+      sign-field(performer.at("name"), performer.at("position"), performer.at("part"))
     }
   }
   pagebreak(weak: true)

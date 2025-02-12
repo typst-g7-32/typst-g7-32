@@ -48,13 +48,14 @@
     return name.replace(" ", "\u{00A0}")
 }
 
-#let sign-field(name, position, details: "подпись, дата") = {
+#let sign-field(name, position, part, details: "подпись, дата") = {
   return table(
+    inset: (x: 0pt, y: 3pt),
     stroke: none,
     align: bottom,
     columns: (35%, 5%, 1fr, 5%, 20%),
     [#position], [], [], [], [#unbreak-name(name)],
     table.hline(start: 2, end: 3),
-    [], [], table.cell(align: center)[#small-text[#details]], []
+    [], [], table.cell(align: center)[#small-text[#details]], [], [(#small-text[#part])]
   )
 }
