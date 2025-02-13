@@ -4,7 +4,7 @@
 #let validate-performer(performer, index) = {
   // TODO: Добавить поддержку списка
   if type(performer) == array {
-    assert(performer.len() == 3 or performer.len() == 4, message: "Список исполнителя должен состоять  или трех значений: имя исполнителя, его позиция; является ли он соисполнителем")
+    assert(performer.len() == 2 or performer.len() == 3 or performer.len() == 4, message: "Список исполнителя должен состоять  или трех значений: имя исполнителя, его позиция; является ли он соисполнителем")
   } else {
     assert(type(performer) == "dictionary", message: "Тип исполнителя должен быть словарем с полями 'name', 'position' и 'co-performer'")
     assert("name" in performer.keys(), message: "Отсутствует поле 'name' у исполнителя " + repr(index+1))
@@ -18,8 +18,16 @@
     for (i, performer) in performers.enumerate() {
       validate-performer(performer, i)
       if type(performer) == "array" {
-        let (name, position, co-performer, part) = performers.at(i)
-        performers.at(i) = (name: name, position: position, co-performer: co-performer, part:part)
+        if performer.len() == 2 {
+          let (name, position) = performers.at(i)
+          performers.at(i) = (name: name, position: position)
+        } else if performer.len() == 3 {
+          let (name, position, co-performer) = performers.at(i)
+          performers.at(i) = (name: name, position: position, co-performer: co-performer)
+        } else {
+          let (name, position, co-performer, part) = performers.at(i)
+          performers.at(i) = (name: name, position: position, co-performer: co-performer, part:part)
+        }
       }
     }
     return performers
@@ -33,21 +41,34 @@
   heading(structural-heading-titles.performers, outlined: false)
   let co-performers = ()
   for performer in performers {
-    co-performers.push(performer.co-performer)
+    if "co-performer" in performer.keys() {
+      co-performers.push(performer.co-performer)
+    }    
   }
+
   let contains-co-performers = true in co-performers
   heading(structural-heading-titles.performers, outlined: false)
 
   for performer in performers {
-    if performer.co-performer {continue}
-    sign-field(performer.at("name"), performer.at("position"), performer.at("part"))
+    if "co-performer" in performer.keys() and performer.co-performer {continue}
+    if performer.len() == 2 {
+      sign-field(performer.at("name"), performer.at("position"))
+    } else if performer.len() == 3 {
+      sign-field(performer.at("name"), performer.at("position"))
+    } else {
+      sign-field(performer.at("name"), performer.at("position"), part: performer.at("part"))
+    }
   }
 
   if contains-co-performers {
     [Соисполнители:]
-    for performer in performers {
+    for performer in performers { 
       if not performer.co-performer {continue}
-      sign-field(performer.at("name"), performer.at("position"), performer.at("part"))
+      else if performer.len() == 3 {
+        sign-field(performer.at("name"), performer.at("position"))
+      } else {
+        sign-field(performer.at("name"), performer.at("position"), part: performer.at("part"))
+      }
     }
   }
   pagebreak(weak: true)

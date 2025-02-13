@@ -81,11 +81,11 @@
     v(16%)
 
     if performer != none { // TODO: Подписывать как исполнителя
-        sign-field(performer.at("name"), performer.at("position"), none)
+        sign-field(performer.at("name"), performer.at("position"))
     }
 
     if manager.name != none {
-        sign-field(manager.at("name"), manager.at("position"), none)
+        sign-field(manager.at("name"), manager.at("position"))
     }
 
     pagebreak(weak: true)
