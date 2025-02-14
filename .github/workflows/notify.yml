@@ -1,0 +1,47 @@
+name: Notify on various events
+
+on:
+  push:
+    branches:
+      - '**'
+  fork:
+  watch:
+    types:
+      - started
+  issues:
+    types:
+      - opened
+      - closed
+      - reopened
+      - locked
+      - unlocked
+  issue_comment:
+    types:
+      - created
+      - deleted
+  pull_request:
+    types:
+      - opened
+      - closed
+      - reopened
+      - locked
+      - unlocked
+      - synchronize
+  pull_request_review_comment:
+    types:
+      - created
+      - deleted
+  release:
+    types:
+      - published
+      - released
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify the event on Telegram
+        uses: EverythingSuckz/github-telegram-notify@main
+        with:
+          bot_token: '${{ secrets.BOT_TOKEN }}'
+          chat_id: '${{ secrets.CHAT_ID }}'
