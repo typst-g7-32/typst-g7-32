@@ -4,12 +4,11 @@
 #let validate-performer(performer, index) = {
   // TODO: Добавить поддержку списка
   if type(performer) == array {
-    assert(performer.len() == 2 or performer.len() == 3 or performer.len() == 4, message: "Список исполнителя должен состоять  или трех значений: имя исполнителя, его позиция; является ли он соисполнителем")
+    assert(performer.len() in range(2,5), message: "Список исполнителя должен состоять из двух значений: имя исполнителя, его позиция; является ли он соисполнителем")
   } else {
     assert(type(performer) == "dictionary", message: "Тип исполнителя должен быть словарем с полями 'name', 'position' и 'co-performer'")
     assert("name" in performer.keys(), message: "Отсутствует поле 'name' у исполнителя " + repr(index+1))
     assert("position" in performer.keys(), message: "Отсутствует поле 'position' у исполнителя " + repr(index+1))
-    assert("co-performer" in performer.keys(), message: "Отсутствует поле 'co-performer' у исполнителя " + repr(index+1))
   }
 }
 
@@ -18,16 +17,7 @@
     for (i, performer) in performers.enumerate() {
       validate-performer(performer, i)
       if type(performer) == "array" {
-        if performer.len() == 2 {
-          let (name, position) = performers.at(i)
-          performers.at(i) = (name: name, position: position)
-        } else if performer.len() == 3 {
-          let (name, position, co-performer) = performers.at(i)
-          performers.at(i) = (name: name, position: position, co-performer: co-performer)
-        } else {
-          let (name, position, co-performer, part) = performers.at(i)
-          performers.at(i) = (name: name, position: position, co-performer: co-performer, part:part)
-        }
+        performers.at(i) = ("name", "position", "co-performer", "part").zip(performers.at(i)).to-dict()
       }
     }
     return performers
@@ -40,14 +30,14 @@
 #let performers-page(performers) = {
   heading(structural-heading-titles.performers, outlined: false)
   let co-performers = ()
+  let contains-co-performers = false;
+
   for performer in performers {
-    if "co-performer" in performer.keys() {
-      co-performers.push(performer.co-performer)
+    if "co-performer" in performer.keys() and performer.co-performer {
+      contains-co-performers = true;
+      break;
     }    
   }
-
-  let contains-co-performers = true in co-performers
-  heading(structural-heading-titles.performers, outlined: false)
 
   for performer in performers {
     if "co-performer" in performer.keys() and performer.co-performer {continue}

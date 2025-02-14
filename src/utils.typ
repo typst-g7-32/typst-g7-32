@@ -49,25 +49,15 @@
 }
 
 #let sign-field(name, position, part: none, details: "подпись, дата") = {
-  if part != none {
-    return table(
-      inset: (x: 0pt, y: 3pt),
-      stroke: none,
-      align: bottom,
-      columns: (35%, 5%, 1fr, 5%, 20%),
-      [#position], [], [], [], [#unbreak-name(name)],
-      table.hline(start: 2, end: 3),
-      [], [], table.cell(align: center)[#small-text[#details]], [], [(#small-text[#part])]
-    )
-  } else {
-    return table(
-      inset: (x: 0pt, y: 3pt),
-      stroke: none,
-      align: bottom,
-      columns: (35%, 5%, 1fr, 5%, 20%),
-      [#position], [], [], [], [#unbreak-name(name)],
-      table.hline(start: 2, end: 3),
-      [], [], table.cell(align: center)[#small-text[#details]], [], [#small-text[#part]]
-    )
-  }
+  let part-cell = if part != none { [(#small-text[#part])] } else { [] }
+
+  return table(
+    inset: (x: 0pt, y: 3pt),
+    stroke: none,
+    align: bottom,
+    columns: (35%, 5%, 1fr, 5%, 20%),
+    [#position], [], [], [], [#unbreak-name(name)],
+    table.hline(start: 2, end: 3),
+    [], [], table.cell(align: center)[#small-text[#details]], [], part-cell
+  )
 }
