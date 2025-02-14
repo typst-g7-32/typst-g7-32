@@ -25,6 +25,25 @@
     justify: true,
     first-line-indent: indent,
   )
+
+  set ref(supplement: none)
+  set figure.caption(separator: " — ")
+
+  set math.equation(numbering: "(1)")
+
+  show figure.where(
+    kind: table
+  ): set figure.caption(position: top)
+  show figure.caption.where(kind: table): set align(left)
+  show table.cell: set align(left)
+
+  // TODO: Расположить table.header по центру
+  let table-header(..headers) = {
+    table.header(..headers.pos().map(it => {
+      set text(weight: "bold")
+      it
+    }))
+  }
   
   set page(footer: context [
     #let page = here().page()
@@ -32,6 +51,9 @@
         #if page == 1 {[#city #year]} else {page}
     ]
   ])
+  show ref: it => {
+      it
+    }
 
   set bibliography(style: "gost-r-705-2008-numeric", title: structural-heading-titles.references)
   

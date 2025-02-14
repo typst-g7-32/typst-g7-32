@@ -1,4 +1,4 @@
-name: Notify on various events
+name: Notify
 
 on:
   push:
@@ -43,5 +43,5 @@ jobs:
       - name: Notify the event on Telegram
         uses: EverythingSuckz/github-telegram-notify@main
         with:
-          bot_token: '${{ secrets.BOT_TOKEN }}'
-          chat_id: '${{ secrets.CHAT_ID }}'
+          bot_token: '${{ secrets.NOTIFY_BOT_TOKEN }}'
+          chat_id: '${{ secrets.NOTIFY_CHAT_ID }}'
