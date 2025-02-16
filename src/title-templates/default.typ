@@ -24,7 +24,7 @@
     align(center)[
         #ministry\
         #upper(organization.full)\
-        #(upper(organization.short))
+        (#upper(organization.short))
     ]
 
     v(15pt)
@@ -66,7 +66,7 @@
         }
         [\ ]
         upper(subject)
-        if stage != none {
+        if stage != (type: none, num: none) {
             [\ (#stage.type]
             if stage.num != none {
                 [, этап #stage.num]
