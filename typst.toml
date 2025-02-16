@@ -1,7 +1,7 @@
 [package]
 name = "typst-g7-32"
 version = "0.0.1"
-entrypoint = "src/lib.typ"
+entrypoint = "src/export.typ"
 authors = ["Forgenet"]
 license = "MIT"
 description = "GOST 7.32-2017 template"
@@ -20,4 +20,3 @@ exclude = [
 [template]
 path = "template"
 entrypoint = "main.typ"
-thumbnail = "template.png"

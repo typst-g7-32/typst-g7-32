@@ -5,6 +5,10 @@
   let required-keys = expected-keys.filter(key => key.at(-1) == "*").map(key => key.slice(0, -1))
   let not-required-keys = expected-keys.filter(key => key.at(-1) != "*")
 
+  if type(field) == type(none) {
+    return clean-exptected-keys.map(key => (key, none)).to-dict()
+  }
+
   if type(field) == dictionary {
     for key in required-keys {
       assert(key in field.keys(), message: "В словаре " + help-text + " отсутствует обязательный ключ '" + key + "'")
@@ -29,14 +33,10 @@
     return result
   }
 
-  else if type(field) == string {
+  else if type(field) == "string" {
     let result = clean-exptected-keys.map(key => (key, none)).to-dict()
     result.insert(clean-exptected-keys.at(0), field)
     return result
-  }
-
-  else if type(field) == none {
-    return clean-exptected-keys.map(key => (key, none)).to-dict()
   }
 
   else {

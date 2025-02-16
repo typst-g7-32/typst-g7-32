@@ -13,7 +13,7 @@
     title(title-template, ..arguments)
   }
 
-  if arguments.performers != none and arguments.performers.len() > 0 {
+  if arguments.performers != none and arguments.performers.len() > 1 {
     performers-page(arguments.performers)
   }
 
