@@ -55,7 +55,7 @@
     inset: (x: 0pt, y: 3pt),
     stroke: none,
     align: bottom,
-    columns: (35%, 5%, 1fr, 5%, 20%),
+    columns: (45%, 5%, 1fr, 5%, 20%),
     [#position], [], [], [], [#unbreak-name(name)],
     table.hline(start: 2, end: 3),
     [], [], table.cell(align: center)[#small-text[#details]], [], part-cell

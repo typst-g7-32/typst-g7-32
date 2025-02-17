@@ -66,17 +66,17 @@ jobs:
       - name: Compile Typst document to PDF
         uses: docker://ghcr.io/typst/typst:latest
         with:
-          args: compile --root . --font-path fonts/ template/main.typ preview_assets/main.pdf
+          args: compile --root . tests/default/test.typ preview_assets/main.pdf
 
       - name: Compile Typst document to PNG
         uses: docker://ghcr.io/typst/typst:latest
         with:
-          args: compile --root . --font-path fonts/ template/main.typ preview_assets/preview.png --format png --pages 1 --ppi 300
+          args: compile --root . tests/default/test.typ preview_assets/preview.png --format png --pages 1 --ppi 300
 
       - name: Compile source Typst document to PNG
         uses: docker://ghcr.io/typst/typst:latest
         with:
-          args: compile ./assets/utils/render-source.typ preview_assets/source.png --format png --root . --pages 1 --ppi 300
+          args: compile --root . ./assets/utils/render-source.typ preview_assets/source.png --format png --pages 1 --ppi 300
       
       - name: Stash preview_assets
         run: |
