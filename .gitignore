@@ -8,5 +8,6 @@ tests/**/diff/**
 !assets/**/*.png
 
 !tests/**/*.png
+!tests/**/*.pdf
 tests/**/out/**/*.png
 tests/**/diff/**/*.png
