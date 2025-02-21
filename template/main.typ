@@ -1,4 +1,4 @@
-#import "@preview/typst-g7-32:0.0.1": gost, abstract
+#import "../src/export.typ": gost, abstract
 
 #show: gost.with(
   ministry: "Министерство образования и науки Российской Федерации
@@ -24,7 +24,7 @@
   subject: "Исследование механизма действия и фармакокинетики РФМ",
   stage: (type: "заключительный", num: 2),
   part: 1,
-  manager: (name: "Плющев Ю.Б.", position: "Преподаватель, доцент кафедры 307"),
+  manager: (name: "Плющев Ю.Б.", position: "Преподаватель, \nдоцент кафедры 307"),
   city: "Москва",
   year: auto,
   force-outline: true,

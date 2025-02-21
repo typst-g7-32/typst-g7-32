@@ -33,7 +33,7 @@
     return result
   }
 
-  else if type(field) == "string" {
+  else if type(field) == string {
     let result = clean-exptected-keys.map(key => (key, none)).to-dict()
     result.insert(clean-exptected-keys.at(0), field)
     return result

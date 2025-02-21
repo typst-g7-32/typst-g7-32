@@ -38,10 +38,10 @@ jobs:
         uses: baptiste0928/cargo-install@v3.0.0
         with:
           crate: tytanic
-          version: '0.1.3'
+          version: '0.2.0'
           
       - name: Run test suite
-        run: tt run
+        run: tt run --use-system-fonts
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v4

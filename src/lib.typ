@@ -8,6 +8,8 @@
   let hide-title = arguments.remove("hide-title")
 
   arguments.performers = fetch-performers(arguments.performers)
+  
+  set par(justify: false)
 
   if not hide-title {
     title(title-template, ..arguments)
