@@ -1,12 +1,12 @@
 #import "component/headings.typ": headings, structural-heading-titles
 
 #let small-text = body => {
-  set text(size: 10pt)
+  set text(size: 12pt)
   body
 }
 
 #let indent = 1.25cm
-#let text-size = 12pt
+#let text-size = 14pt
 
 #let gost-style(year: none, city: "", body) = {
   set page(
@@ -23,8 +23,13 @@
 
   set par(
     justify: true,
-    first-line-indent: indent,
+    first-line-indent: (
+      amount: indent,
+      all: true,
+    )
   )
+
+  show outline: set block(below: indent / 2)
 
   set ref(supplement: none)
   set figure.caption(separator: " — ")

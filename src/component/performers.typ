@@ -6,22 +6,22 @@
   if type(performer) == array {
     assert(performer.len() in range(2,5), message: "Список исполнителя должен состоять из двух значений: имя исполнителя, его позиция; является ли он соисполнителем")
   } else {
-    assert(type(performer) == "dictionary", message: "Тип исполнителя должен быть словарем с полями 'name', 'position' и 'co-performer'")
+    assert(type(performer) == dictionary, message: "Тип исполнителя должен быть словарем с полями 'name', 'position' и 'co-performer'")
     assert("name" in performer.keys(), message: "Отсутствует поле 'name' у исполнителя " + repr(index+1))
     assert("position" in performer.keys(), message: "Отсутствует поле 'position' у исполнителя " + repr(index+1))
   }
 }
 
 #let fetch-performers(performers) = {
-  if type(performers) == "array" {
+  if type(performers) == array {
     for (i, performer) in performers.enumerate() {
       validate-performer(performer, i)
-      if type(performer) == "array" {
+      if type(performer) == array {
         performers.at(i) = ("name", "position", "co-performer", "part").zip(performers.at(i)).to-dict()
       }
     }
     return performers
-  } else if type(performers) == "dictionary" {
+  } else if type(performers) == dictionary {
     validate-performer(performers, 0)
     return (performers, )
   }
@@ -51,7 +51,7 @@
   }
 
   if contains-co-performers {
-    [Соисполнители:]
+    block[Соисполнители:]
     for performer in performers { 
       if not performer.co-performer {continue}
       else if performer.len() == 3 {

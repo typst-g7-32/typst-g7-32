@@ -49,12 +49,7 @@
     service-heading(it)
   }
 
-  show heading: it => {
-    it
-    ""
-    context v(-par.spacing - measure("").height + 0.25cm) 
-    // TODO: Исправить отступ в 0.25см, свериться с гостом
-  }
-
+  show heading: set block(below: indent, above: indent) // TODO: Сверить
+  
   body
 }
