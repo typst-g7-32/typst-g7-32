@@ -51,9 +51,6 @@
         #if page == 1 {[#city #year]} else {page}
     ]
   ])
-  show ref: it => {
-      it
-    }
 
   set bibliography(style: "gost-r-705-2008-numeric", title: structural-heading-titles.references)
   
