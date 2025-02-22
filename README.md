@@ -1,4 +1,7 @@
 ![Workflow Status](https://github.com/typst-g7-32/typst-g7-32/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/github/license/typst-g7-32/typst-g7-32)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Ftypst-gost.ru)
+
 # Предпросмотр
 <p align="center">
     <a href="template/main.typ">
