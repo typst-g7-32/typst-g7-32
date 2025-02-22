@@ -49,7 +49,7 @@
     service-heading(it)
   }
 
-  show heading: set block(below: indent, above: indent) // TODO: Сверить
+  show heading: set block(below: 2em, above: 2em) // TODO: Сверить
   
   body
 }
