@@ -37,7 +37,9 @@
         ],
     )
 
-    v(1fr)
+    if (udk, gos-no, inventory-no).any(it => it != none) {
+        v(1fr)
+    }
 
     grid(
         columns: (1fr, 1fr),
@@ -51,7 +53,9 @@
         ],
     )
 
-    v(1fr)
+    if (approved-by.name, agreed-by.name).any(it => it != none) {
+        v(1fr)
+    }
 
     align(center, {
         upper(report-type)
@@ -78,7 +82,7 @@
         }
     })
 
-    v(1fr)
+    v(2fr)
 
     if performer != none { // TODO: Подписывать как исполнителя
         sign-field(performer.at("name"), performer.at("position"))
