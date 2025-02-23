@@ -1,15 +1,11 @@
-![Workflow Status](https://github.com/typst-g7-32/typst-g7-32/actions/workflows/ci.yml/badge.svg)
-![License](https://img.shields.io/github/license/typst-g7-32/typst-g7-32)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Ftypst-gost.ru)
+<a href="https://github.com/typst-g7-32/typst-g7-32/actions"><img src="https://github.com/typst-g7-32/typst-g7-32/actions/workflows/ci.yml/badge.svg" alt="License badge"></a>
+<a href="https://github.com/typst-g7-32/typst-g7-32/blob/main/LICENSE"><img src="https://img.shields.io/github/license/typst-g7-32/typst-g7-32" alt="License badge"></a>
+<a href="https://typst-gost.ru"><img src="https://img.shields.io/website?url=https%3A%2F%2Ftypst-gost.ru" alt="Website badge"></a>
 
 # Предпросмотр
 <p align="center">
-    <a href="template/main.typ">
-        <img src="https://github.com/typst-g7-32/typst-g7-32/blob/preview/source.png" alt="Source" width="48%">
-    </a>
-    <a href="https://github.com/typst-g7-32/typst-g7-32/blob/preview/main.pdf">
-        <img src="https://github.com/typst-g7-32/typst-g7-32/blob/preview/preview.png" alt="Preview" width="48%">
-    </a>
+    <a href="template/main.typ"><img src="https://github.com/typst-g7-32/typst-g7-32/blob/preview/source.png" alt="Source" width="48%"></a>
+    <a href="https://github.com/typst-g7-32/typst-g7-32/blob/preview/main.pdf"><img src="https://github.com/typst-g7-32/typst-g7-32/blob/preview/preview.png" alt="Preview" width="48%"></a>
 </p>
 
 # Шаблон для оформления документов по ГОСТ 7.32-2017 на Typst
