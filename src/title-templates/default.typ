@@ -27,7 +27,7 @@
         (#upper(organization.short))
     ]
 
-    v(15pt)
+    v(1fr)
 
     grid(
         align(left)[
@@ -35,9 +35,9 @@
             #if gos-no != none [Рег. №: #gos-no\ ]
             #if inventory-no != none [Рег. № ИКРБС: #inventory-no\ ]
         ],
-    ) 
+    )
 
-    v(15pt)
+    v(1fr)
 
     grid(
         columns: (1fr, 1fr),
@@ -51,7 +51,7 @@
         ],
     )
 
-    v(30pt)
+    v(1fr)
 
     align(center, {
         upper(report-type)
@@ -78,7 +78,7 @@
         }
     })
 
-    v(16%)
+    v(1fr)
 
     if performer != none { // TODO: Подписывать как исполнителя
         sign-field(performer.at("name"), performer.at("position"))
@@ -88,5 +88,5 @@
         sign-field(manager.at("name"), manager.at("position"))
     }
 
-    pagebreak(weak: true)
+    v(1fr)
 }
