@@ -12,7 +12,11 @@
   set par(justify: false)
 
   if not hide-title {
-    title(title-template, ..arguments)
+    block(
+      title(title-template, ..arguments),
+      breakable: false,
+    )
+    pagebreak(weak: true)
   }
 
   if arguments.performers != none and arguments.performers.len() > 1 {
