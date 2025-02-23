@@ -19,10 +19,7 @@
     hyphenate: false
   )
 
-  set outline(indent: auto)
-
   set par(
-    leading: 0.8em,
     justify: true,
     first-line-indent: (
       amount: indent,
@@ -31,6 +28,7 @@
     spacing: 1.5em
   )
 
+  set outline(indent: indent, depth: 3)
   show outline: set block(below: indent / 2)
 
   set ref(supplement: none)
@@ -38,16 +36,17 @@
 
   set math.equation(numbering: "(1)")
 
+  show figure: pad.with(bottom: 0.5em)
+  show figure.where(kind: image): set figure(supplement: [Рисунок])
+
   show figure.where(
     kind: table
   ): set figure.caption(position: top)
   show figure.caption.where(kind: table): set align(left)
   show table.cell: set align(left)
 
-  set block(above: indent, below: indent)
-
-  set list(marker: [–], indent: indent, spacing: 2em)
-  set enum(indent: indent, spacing: 2em)
+  set list(marker: [–], indent: indent, spacing: 1em)
+  set enum(indent: indent, spacing: 1em)
 
   // TODO: Расположить table.header по центру
   let table-header(..headers) = {
