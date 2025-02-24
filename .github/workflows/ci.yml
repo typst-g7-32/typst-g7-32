@@ -7,7 +7,6 @@ on:
     paths:
       - 'template/**'
       - 'src/**'
-      - 'fonts/**'
       - 'assets/utils/**'
       - '.github/workflows/**'
       - 'assets/utils/**'
@@ -55,6 +54,7 @@ jobs:
           retention-days: 5
 
   build_preview:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
