@@ -19,6 +19,7 @@
     stage: none,
     manager: (position: none, name: none),
     city: none,
+    force-performers: false,
     force-outline: false,
 ) = {
     align(center)[
@@ -84,7 +85,7 @@
 
     v(2fr)
 
-    if performer != none { // TODO: Подписывать как исполнителя
+    if performer != none and not force-performers { // TODO: Подписывать как исполнителя
         sign-field(performer.at("name"), performer.at("position"))
     }
 
