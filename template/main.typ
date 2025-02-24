@@ -27,6 +27,7 @@
   manager: (name: "Плющев Ю.Б.", position: "Преподаватель, \nдоцент кафедры 307"),
   city: "Москва",
   year: auto,
+  force-performers: false,
   force-outline: true,
   hide-title: false
 )
