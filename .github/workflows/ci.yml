@@ -40,7 +40,7 @@ jobs:
           version: '0.2.1'
           
       - name: Run test suite
-        run: tt run --use-system-fonts
+        run: tt run --use-system-fonts --no-fail-fast
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
