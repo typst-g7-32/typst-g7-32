@@ -23,11 +23,35 @@
 - Медленная компиляция: Процесс компиляции документов в LaTeX может быть медленным, особенно при работе с большими проектами, что снижает эффективность работы. 
 В отличие от этого, Typst предлагает более современный и интуитивно понятный подход к вёрстке документов, обеспечивая высокую скорость компиляции и широкую функциональность без необходимости в дополнительных модулях.
 
-## Установка
+# Установка
 На данный момент доступно только локальное использование, поскольку шаблон не выложен в [Typst Universe](https://typst.app/universe/).
 Вы можете следить за прогрессом разработки версии для распространения [тут](https://github.com/typst-g7-32/typst-g7-32/milestone/1).
 
 ## На Linux
+
+### Установка шрифтов
+#### ALT Linux
+```sh
+su - -c "apt-get update && apt-get install fonts-ttf-ms"
+```
+
+#### Arch Linux/Manjaro/EndeavourOS/CachyOS
+*(требует установленный [yay](https://github.com/Jguer/yay))*
+```sh
+yay ttf-ms-win11-auto
+```
+
+#### Debian/Ubuntu/elementary OS/Linux Mint/Pop! OS
+```sh
+sudo apt update
+sudo apt install ttf-mscorefonts-installer
+```
+
+#### Fedora/RHEL
+```sh
+sudo dnf install https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+```
+
 ## 1. Установка Rust и Cargo  
 Typst требует установленного Rust и Cargo. Установите их с помощью команды:  
 ```sh
