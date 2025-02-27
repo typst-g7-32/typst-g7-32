@@ -52,38 +52,65 @@ sudo apt install ttf-mscorefonts-installer
 sudo dnf install https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
 ```
 
-## 1. Установка Rust и Cargo  
+### 1. Установка Rust и Cargo  
 Typst требует установленного Rust и Cargo. Установите их с помощью команды:  
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-## 2. Перезапуск терминала  
+### 2. Перезапуск терминала  
 Чтобы изменения вступили в силу, перезапустите текущую сессию терминала:  
 ```sh
 exec $SHELL
 ```
 
-## 3. Установка Typst CLI  
+### 3. Установка Typst CLI  
 После установки Rust установите `typst-cli` через Cargo:  
 ```sh
 cargo install --locked typst-cli
 ```
 
-## 4. Клонирование репозитория шаблона  
+### 4. Клонирование репозитория шаблона  
 Так как шаблон `typst-g7-32` ещё не опубликован, его необходимо временно добавить вручную в кэш пакетов Typst:  
 ```sh
 git clone https://github.com/typst-g7-32/typst-g7-32 ~/.cache/typst/packages/preview/typst-g7-32/0.0.1
 ```
 
-## 5. Создание проекта на основе шаблона  
+### 5. Создание проекта на основе шаблона  
 Теперь можно создать новый проект с использованием шаблона `typst-g7-32`:  
 ```sh
 typst init @preview/typst-g7-32:0.0.1 my-gost-document
 ```
 После выполнения этой команды в текущей директории появится директория `./my-gost-document`, содержащая подготовленный проект для работы с Typst по ГОСТ 7.32-2017.
 
-## 6. Установка tinymist
+## На Windows
+
+1. Установка Rust через rustup
+
+```powershell
+Invoke-WebRequest -Uri https://win.rustup.rs -OutFile rustup-init.exe
+.\rustup-init.exe -y
+```
+После установки, если переменные окружения не обновились, перезапустите терминал.
+
+2. Установка typst-cli через Cargo
+
+```powershell
+cargo install --locked typst-cli
+```
+3. Клонирование репозитория пакета (создаём необходимые папки)
+```powershell
+$targetDir = "%LOCALAPPDATA%\typst\packages\preview\typst-g7-32\0.1.0"
+New-Item -ItemType Directory -Force -Path $targetDir | Out-Null
+git clone https://github.com/typst-g7-32/typst-g7-32 $targetDir
+```
+
+4. Инициализация документа с использованием клона preview-пакета
+```powershell
+typst init @preview/typst-g7-32:0.1.0 my-gost-document
+```
+
+## Установка tinymist
 Для удобного предпросмотра документов, созданных с помощью Typst в vscode, можно установить расширение tinymist.
 Это позволит запускать мгновенное отображение изменений, добавит подсветку синтаксиса и подсказки и позволит быстро экспортировать документ.
 
