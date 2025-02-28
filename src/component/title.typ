@@ -30,10 +30,11 @@
         document-arguments.approved-by.year = document-arguments.year
     }
 
-    let title-performer = if document-arguments.performers != none and document-arguments.performers.len() == 1 {
-        document-arguments.performers.at(0)
+    let title-performer
+    if document-arguments.performers != none and document-arguments.performers.len() == 1 {
+        title-performer = document-arguments.performers.at(0)
     } else {
-        none
+        title-performer = none
     }
     let title-arguments = (:)
     for (key, value) in document-arguments {
