@@ -1,4 +1,4 @@
-#import "@preview/typst-g7-32:0.0.1": gost, abstract
+#import "../../../src/export.typ": gost, abstract
 
 #show: gost.with(
   ministry: "Министерство образования и науки Российской Федерации

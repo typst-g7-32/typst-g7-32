@@ -11,10 +11,8 @@ categories = ["cv"]
 exclude = [
 	".github",
 	"docs",
-	"scripts",
 	"tests",
 	".typstignore",
-	"Justfile",
 ]
 
 [template]
