@@ -1,145 +1,63 @@
 #import "headings.typ": structural-heading-titles
-#import "../utils.typ": sign-field
+#import "../utils.typ": sign-field, fetch-field
 
-#let validate-performer(performer, index) = {
-  // TODO: Добавить поддержку списка
-  if type(performer) == array {
-    assert(performer.len() in range(2,5), message: "Список исполнителя должен состоять из двух значений: имя исполнителя, его позиция; является ли он соисполнителем")
-  } else if type(performer) == str {} else {
-    assert(type(performer) == dictionary, message: "Тип исполнителя должен быть словарем с полями 'name', 'position' и 'co-performer'")
-    assert("name" in performer.keys(), message: "Отсутствует поле 'name' у исполнителя " + repr(index+1))
-    assert("position" in performer.keys(), message: "Отсутствует поле 'position' у исполнителя " + repr(index+1))
+#let fetch-performers(performers) = {
+  let performers-args = ("name*", "position*", "co-performer", "part", "organization")
+  if type(performers) == array {
+    let current-organization = none;
+    let result = ()
+    for (i, performer) in performers.enumerate() {
+      if type(performer) == str {
+        current-organization = performer
+        continue
+      }
+      let performer = fetch-field(performer, performers-args, "исполнителя №" + str(i + 1))
+      performer.organization = current-organization
+      if performer.co-performer == none {
+        performer.co-performer = false
+      }
+      result.push(performer)
+    }
+    return result
+  } else if type(performers) == dictionary {
+    performer = fetch-field(performers, performers-args, "исполнителя")
+    return (performer, )
+  } else {
+    panic("Некорректный тип поля исполнителей")
   }
 }
 
-#let fetch-performers(performers) = {
-  let current-organization = "";
-  if type(performers) == array {
-    for (i, performer) in performers.enumerate() {
-      validate-performer(performer, i)
-      if type(performer) == array {
-        performers.at(i) = ("name", "position", "co-performer", "part").zip(performers.at(i)).to-dict()
-        performers.at(i).insert("organization", current-organization)
-      } else if type(performer) == str {
-        current-organization = performer
-      } else {
-        performers.at(i).insert("organization", current-organization)
-      }
+#let group-organizations(performers) = {
+  set par(spacing: 0.5em)
+  let organizations = performers.map(performer => performer.organization).dedup().filter(org => org != none)
+  let organizations-with-performers = organizations.map(organization => (organization, performers.filter(performer => performer.organization == organization))).to-dict()
+  let without-organization = performers.filter(performer => performer.organization == none)
+  for performer in without-organization {
+    [#sign-field(performer.name, performer.position, part: performer.part)]
+  }
+  for (organization, performers) in organizations-with-performers.pairs() {
+    [#block([#organization:])]
+    for performer in performers {
+      sign-field(performer.name, performer.position, part: performer.part)
     }
-    return performers
-  } else if type(performers) == dictionary {
-    validate-performer(performers, 0)
-    return (performers, )
+    
   }
 }
 
 #let performers-page(performers) = {
   heading(structural-heading-titles.performers, outlined: false)
-  let co-performers = ()
-  let organizations = ("",)
-  let contains-co-performers = false
+  let performers = fetch-performers(performers)
 
-  for performer in performers {
-    if type(performer) != str {
-      if "co-performer" in performer.keys() and performer.co-performer {
-        contains-co-performers = true
-      }
-    } else {
-      if performer not in organizations {
-        organizations.push(performer)
-      }
-    }   
-  }
+  let not-co-performers = performers.filter(performer => performer.co-performer == false)
+  let co-performers = performers.filter(performer => performer.co-performer == true)
 
-  for performer in performers {
-    if type(performer) != str and performer.organization == "" {
-      if "co-performer" in performer.keys() and performer.co-performer {continue}
-      if performer.len() == 3 {
-        sign-field(performer.at("name"), performer.at("position"))
-      } else if performer.len() == 4 {
-        sign-field(performer.at("name"), performer.at("position"))
-      } else {
-        sign-field(performer.at("name"), performer.at("position"), part: performer.at("part"))
-      }
-    }
-  }
+  group-organizations(not-co-performers)
 
-  let organization-is-present
-
-  for organization in organizations {
-    organization-is-present = false
-    for performer in performers {
-      if type(performer) == str {continue}
-      if "co-performer" not in performer.keys() or not performer.co-performer {
-        if performer.organization == organization {
-          organization-is-present = true
-          break
-        }
-      }
-    }
-    if organization-is-present {
-      set par(spacing: 0.5em)
-      if organization != "" {
-        block[#organization:]
-      }
-      for performer in performers {
-        if type(performer) == str {continue}
-        if "co-performer" in performer.keys() and performer.co-performer {continue}
-        if performer.organization != organization {continue}
-        if performer.organization == "" {continue}
-        if performer.len() == 3 {
-          sign-field(performer.at("name"), performer.at("position"))
-        } else if performer.len() == 4 {
-          sign-field(performer.at("name"), performer.at("position"))
-        } else {
-          sign-field(performer.at("name"), performer.at("position"), part: performer.at("part"))
-        }
-      }
-    }
-  }
+  let contains-co-performers = performers.any(performer => performer.co-performer)
 
   if contains-co-performers {
     block[Соисполнители:]
-    for performer in performers { 
-      if type(performer) != str {
-        if "co-performer" not in performer.keys() or not performer.co-performer {continue}
-        if performer.organization != "" {continue}
-        if performer.len() == 4 {
-          sign-field(performer.at("name"), performer.at("position"))
-        } else {
-          sign-field(performer.at("name"), performer.at("position"), part: performer.at("part"))
-        }
-      }
-    }
-    for organization in organizations {
-      organization-is-present = false
-      for performer in performers {
-        if type(performer) == str {continue}
-        if "co-performer" in performer.keys() and performer.co-performer {
-          if performer.organization == organization {
-            organization-is-present = true
-            break
-          }
-        }
-      }
-      if organization-is-present {
-        set par(spacing: 0.5em)
-        if organization != "" {
-          block[#organization:]
-        }
-        for performer in performers {
-          if type(performer) == str {continue}
-          if "co-performer" not in performer.keys() or not performer.co-performer {continue}
-          if performer.organization != organization {continue}
-          if performer.organization == "" {continue}
-          if performer.len() == 4 {
-            sign-field(performer.at("name"), performer.at("position"))
-          } else {
-            sign-field(performer.at("name"), performer.at("position"), part: performer.at("part"))
-          }
-        }
-      }
-    }
+    group-organizations(co-performers)
   }
   pagebreak(weak: true)
 }
