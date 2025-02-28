@@ -98,7 +98,7 @@ Invoke-WebRequest -Uri https://win.rustup.rs -OutFile rustup-init.exe
 ```powershell
 cargo install --locked typst-cli
 ```
-3. Клонирование репозитория пакета (создаём необходимые папки)
+3. Клонирование репозитория пакета (создаём необходимые директории)
 ```powershell
 $targetDir = "%LOCALAPPDATA%\typst\packages\preview\typst-g7-32\0.1.0"
 New-Item -ItemType Directory -Force -Path $targetDir | Out-Null
