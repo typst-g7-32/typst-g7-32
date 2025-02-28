@@ -58,7 +58,7 @@
 
   [#metadata(force-outline) <force-outline>]
 
-  show: gost-style.with(year: year, city: city)
+  show: gost-style.with(year: year, city: city, hide-title: hide-title)
 
   gost-common(ministry: ministry, organization: organization, udk: udk, gos-no: gos-no, inventory-no: inventory-no, performers: performers, approved-by: approved-by, agreed-by: agreed-by, report-type: report-type, about: about, part: part, bare-subject: bare-subject, research: research, subject: subject, stage: stage, manager: manager, city: city, year: year, force-performers: force-performers, force-outline: force-outline, hide-title: hide-title)
 

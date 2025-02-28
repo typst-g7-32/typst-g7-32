@@ -8,7 +8,7 @@
 #let indent = 1.25cm
 #let text-size = 14pt
 
-#let gost-style(year: none, city: "", body) = {
+#let gost-style(year: none, city: "", hide-title: false, body) = {
   set page(
     margin: (left: 30mm, right: 15mm, top: 20mm, bottom: 20mm)
   )
@@ -58,9 +58,12 @@
   
   set page(footer: context [
     #let page = here().page()
-    #align(center)[
-        #if page == 1 {[#city #year]} else {page}
-    ]
+    #align(center)[#{
+      if page == 1 {
+        if hide-title {} else {[#city #year]}
+      } 
+      else {page}
+    }]
   ])
 
   set bibliography(style: "gost-r-705-2008-numeric", title: structural-heading-titles.references)
