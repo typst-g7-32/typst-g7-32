@@ -41,7 +41,7 @@ su - -c "apt-get update && apt-get install fonts-ttf-ms"
 yay ttf-ms-win11-auto
 ```
 
-#### Debian/Ubuntu/elementary OS/Linux Mint/Pop! OS
+#### Debian/Ubuntu/elementary OS/Linux Mint/Pop!_OS
 ```sh
 sudo apt update
 sudo apt install ttf-mscorefonts-installer
