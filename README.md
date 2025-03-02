@@ -1,3 +1,4 @@
+<a href="https://typst.app/universe/package/modern-g7-32">![Typst Universe](https://img.shields.io/badge/dynamic/xml?url=https://typst.app/universe/package/modern-g7-32&query=/html/body/div/main/div[2]/aside/section[2]/dl/dd[3]&logo=typst&label=universe)</a>
 <a href="https://github.com/typst-g7-32/typst-g7-32/actions"><img src="https://github.com/typst-g7-32/typst-g7-32/actions/workflows/ci.yml/badge.svg" alt="License badge"></a>
 <a href="https://github.com/typst-g7-32/typst-g7-32/blob/main/LICENSE"><img src="https://img.shields.io/github/license/typst-g7-32/typst-g7-32" alt="License badge"></a>
 <a href="https://typst-gost.ru"><img src="https://img.shields.io/website?url=https%3A%2F%2Ftypst-gost.ru" alt="Website badge"></a>
