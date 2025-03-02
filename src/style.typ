@@ -30,6 +30,10 @@
 
   set outline(indent: indent, depth: 3)
   show outline: set block(below: indent / 2)
+  show outline.entry: it => {
+    show regex("\n"): none
+    it
+  }
 
   set ref(supplement: none)
   set figure.caption(separator: " — ")
@@ -37,6 +41,8 @@
   set math.equation(numbering: "(1)")
 
   show figure: pad.with(bottom: 0.5em)
+
+  show image: set align(center)
   show figure.where(kind: image): set figure(supplement: [Рисунок])
 
   show figure.where(
