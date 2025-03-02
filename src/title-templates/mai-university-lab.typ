@@ -18,6 +18,7 @@
     manager: (position: none, name: none),
     city: none,
     force-outline: false,
+    hide-outline: false
 ) = {
     align(left)[
         [Министерство науки и высшего образования Российской Федерации
