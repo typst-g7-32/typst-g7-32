@@ -21,6 +21,7 @@
     city: none,
     force-performers: false,
     force-outline: false,
+    hide-outline: false
 ) = {
     align(center)[
         #ministry\
