@@ -29,6 +29,7 @@
   year: auto,
   force-performers: false,
   force-outline: true,
+  hide-outline: false,
   hide-title: false
 )
 

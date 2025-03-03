@@ -34,7 +34,10 @@
       let force-outline-query = query(<force-outline>)
       let force-outline = force-outline-query.len() > 0 and force-outline-query.first().value
 
-      if (counter(page).final().first() >= 10 or force-outline) and query(selector(heading)).len() > 0 {
+      let hide-outline-query = query(<hide-outline>)
+      let hide-outline = hide-outline-query.len() > 0 and hide-outline-query.first().value
+      
+      if (counter(page).final().first() >= 10 or force-outline) and query(selector(heading)).len() > 0 and not hide-outline {
         outline()
       }
     }
