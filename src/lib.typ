@@ -50,6 +50,9 @@
   force-performers: false,
   force-outline: false,
   hide-title: false,
+  font-size: 14pt,
+  small-font-size: 13pt,
+  indent: 1.5cm,
   body
 ) = {
   if year == auto {
@@ -58,7 +61,7 @@
 
   [#metadata(force-outline) <force-outline>]
 
-  show: gost-style.with(year: year, city: city, hide-title: hide-title)
+  show: gost-style.with(year: year, city: city, font-size: font-size, small-font-size: small-font-size, indent: indent, hide-title: hide-title)
 
   gost-common(ministry: ministry, organization: organization, udk: udk, gos-no: gos-no, inventory-no: inventory-no, performers: performers, approved-by: approved-by, agreed-by: agreed-by, report-type: report-type, about: about, part: part, bare-subject: bare-subject, research: research, subject: subject, stage: stage, manager: manager, city: city, year: year, force-performers: force-performers, force-outline: force-outline, hide-title: hide-title)
 
