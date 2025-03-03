@@ -1,20 +1,27 @@
 #import "component/headings.typ": headings, structural-heading-titles
 
-#let small-text = body => {
+#let small-font-state = state("size", none)
+
+/*#let small-text = body => {
   set text(size: 12pt)
+  body
+}*/
+
+#let small-text = body => context {
+  set text(size: small-font-state.get())
   body
 }
 
-#let indent = 1.25cm
-#let text-size = 14pt
+#let gost-style(year: none, city: "", font-size: 13pt, small-font-size: 10pt, indent: 1.5cm, hide-title: true, body) = {
 
-#let gost-style(year: none, city: "", hide-title: false, body) = {
+  small-font-state.update(x => small-font-size)
+
   set page(
     margin: (left: 30mm, right: 15mm, top: 20mm, bottom: 20mm)
   )
 
   set text(
-    size: text-size,
+    size: font-size,
     lang: "ru",
     hyphenate: false
   )
@@ -58,16 +65,13 @@
   
   set page(footer: context [
     #let page = here().page()
-    #align(center)[#{
-      if page == 1 {
-        if hide-title {} else {[#city #year]}
-      } 
-      else {page}
-    }]
+    #align(center)[
+        #if page == 1 {[#city #year]} else {page}
+    ]
   ])
 
   set bibliography(style: "gost-r-705-2008-numeric", title: structural-heading-titles.references)
   
-  show: headings(text-size, indent)
+  show: headings(font-size, indent)
   body
 }
