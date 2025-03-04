@@ -1,4 +1,5 @@
-#import "component/headings.typ": headings, structural-heading-titles
+#import "component/headings.typ": headings,  structural-heading-titles
+#import "component/applications.typ": is-heading-in-application
 
 #let small-text = body => {
   set text(size: 10pt)
@@ -31,8 +32,19 @@
   set outline(indent: indent, depth: 3)
   show outline: set block(below: indent / 2)
   show outline.entry: it => {
-    show regex("\n"): none
-    it
+    show linebreak: [ ]
+    if is-heading-in-application(it.element) {
+      let body = it.element.body
+      link(
+        it.element.location(),
+        it.indented(
+          none,
+          [Приложение #it.prefix() #it.element.body] + sym.space + box(width: 1fr, it.fill) + sym.space + sym.wj + it.page()
+        )
+      )
+    } else {
+      it
+    }
   }
 
   set ref(supplement: none)
