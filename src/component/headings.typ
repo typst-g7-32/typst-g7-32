@@ -7,9 +7,6 @@
   intro: [Введение],
   conclusion: [Заключение],
   references: [Список использованных источников],
-  appendix: [Приложения]
-  // TODO: Отдельно обрабатывать приложения
-  // TODO: Добавить варианты ручного написания структурных заголовков
 )
 
 #let service-heading = it => {  
@@ -24,13 +21,11 @@
   result
 }
 
-#let headings(text_size, indent) = body => {
-  let structural-heading = structural-heading-titles.values().fold(selector, (acc, i) => acc.or(heading.where(body: i, level: 1)))
-  
+#let headings(text-size, indent) = body => {
+  show heading: set text(size: text-size)
   set heading(numbering: "1.1")
 
   show heading: it => {
-    set text(size: text_size)
     if it.body not in structural-heading-titles.values() {
       pad(it, left: indent)
     } else {
@@ -42,14 +37,16 @@
     pagebreak(weak: true)
     it
   }
-  
+
+  let structural-heading = structural-heading-titles.values().fold(selector, (acc, i) => acc.or(heading.where(body: i, level: 1)))
+
   show structural-heading: set heading(numbering: none)
   show structural-heading: it => {
     pagebreak(weak: true)
     service-heading(it)
   }
 
-  show heading: set block(below: 2em, above: 2em) // TODO: Сверить
+  show heading: set block(below: 2em, above: 2em)
   
   body
 }
