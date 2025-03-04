@@ -1,4 +1,4 @@
-#import "../../../src/export.typ": gost, abstract, applications, application-heading
+#import "../../../src/export.typ": gost, abstract, annexes, annex-heading
 #import "@preview/numberingx:0.0.1"
 
 #set text(font: "Times New Roman")
@@ -152,7 +152,7 @@ $ cal(A) := { x in RR | x "натуральное" } $
 
 #bibliography("references.bib")
 
-#show: applications
+#show: annexes
 
 #[
 #set page(paper: "a3")
@@ -210,5 +210,5 @@ $ sum_(k=0)^n k = 1 + ... + n = (n(n+1)) / 2 $
   caption: [Пример таблицы с данными]
 ) <application-table>
 
-#application-heading("справочное", level: 2)[Приложение с указанием статуса]
+#annex-heading("справочное", level: 2)[Приложение с указанием статуса]
 #lorem(100)

@@ -1,5 +1,5 @@
 #import "component/headings.typ": headings,  structural-heading-titles
-#import "component/applications.typ": is-heading-in-application
+#import "component/annexes.typ": is-heading-in-annex
 
 #let small-text = body => {
   set text(size: 12pt)
@@ -33,7 +33,7 @@
   show outline: set block(below: indent / 2)
   show outline.entry: it => {
     show linebreak: [ ]
-    if is-heading-in-application(it.element) {
+    if is-heading-in-annex(it.element) {
       let body = it.element.body
       link(
         it.element.location(),

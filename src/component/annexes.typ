@@ -1,17 +1,17 @@
 #import "@preview/numberingx:0.0.1": formatter
 
-#let is-heading-in-application(heading) = state("applications", false).at(heading.location())
+#let is-heading-in-annex(heading) = state("annexes", false).at(heading.location())
 
 #let get-element-numbering(current-heading-numbering, element-numbering) = {
   let current-numbering = formatter("{upper-russian}.{1}")(current-heading-numbering.first())
   formatter(str(current-numbering)+".{1}")(element-numbering)
 }
 
-#let application-heading(status, level: 1, body) = {
+#let annex-heading(status, level: 1, body) = {
   heading(level: level)[(#status)\ #body]
 }
 
-#let applications(content) = {
+#let annexes(content) = {
   set heading(
     numbering: formatter("{upper-russian}.{1}"),
     hanging-indent: 0pt
@@ -42,7 +42,7 @@
     [(#get-element-numbering(current-heading, it))]
   })
 
-  state("applications").update(true)
+  state("annexes").update(true)
   counter(heading).update(0)
   content
 }
