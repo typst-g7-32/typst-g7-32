@@ -20,7 +20,7 @@
     }
     return result
   } else if type(performers) == dictionary {
-    performer = fetch-field(performers, performers-args, "исполнителя")
+    let performer = fetch-field(performers, performers-args, "исполнителя")
     return (performer, )
   } else {
     panic("Некорректный тип поля исполнителей")
@@ -53,7 +53,13 @@
 
   group-organizations(not-co-performers)
 
-  let contains-co-performers = performers.any(performer => performer.co-performer)
+  let contains-co-performers = performers.any(performer => 
+    ( if "co-performer" in performer.keys() and performer.co-performer != none {
+      performer.co-performer
+    } else {
+      false
+    })
+  )
 
   if contains-co-performers {
     block[Соисполнители:]
