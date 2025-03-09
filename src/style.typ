@@ -50,17 +50,11 @@
   ): set figure.caption(position: top)
   show figure.caption.where(kind: table): set align(left)
   show table.cell: set align(left)
+  show figure.where(kind: table): set block(breakable: true)
+  // TODO: Расположить table.header по центру и сделать шрифт жирным
 
   set list(marker: [–], indent: indent, spacing: 1em)
   set enum(indent: indent, spacing: 1em)
-
-  // TODO: Расположить table.header по центру
-  let table-header(..headers) = {
-    table.header(..headers.pos().map(it => {
-      set text(weight: "bold")
-      it
-    }))
-  }
   
   set page(footer: context [
     #let page = here().page()
