@@ -11,6 +11,7 @@
 
   if not hide-title {
     block(
+      width: 100%,
       title(title-template, ..arguments),
       breakable: false,
     )

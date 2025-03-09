@@ -1,6 +1,6 @@
 #import "../component/title.typ": detailed-sign-field
 #import "../utils.typ": sign-field
-#import "utils.typ": if-present, per-line
+#import "utils.typ": per-line, approved-and-agreed-fields
 
 #let template(
     ministry: none,
@@ -24,9 +24,8 @@
     force-outline: false,
 ) = {
     per-line(
-        align: center,
         ministry,
-        upper(organization.full),
+        (value: upper(organization.full), when-present: organization.full),
         (value: [(#organization.short)], when-present: organization.short),
     )
 
@@ -36,52 +35,31 @@
         (value: [Рег. №: #gos-no], when-present: gos-no),
         (value: [Рег. № ИКРБС: #inventory-no], when-present: inventory-no),
     )
+    
+    approved-and-agreed-fields(approved-by, agreed-by)
 
-    grid(
-        columns: (1fr, 1fr),
-        align: (left, right),
-        gutter: 20%,
-        if approved-by.name != none [
-            #detailed-sign-field("согласовано", approved-by.name, approved-by.position, approved-by.year)
-        ],
-        if agreed-by.name != none [
-            #detailed-sign-field("утверждаю", agreed-by.name, agreed-by.position, agreed-by.year)
-        ],
+    per-line(
+        align: center,
+        indent: v(2fr),
+        (value: upper(report-type), when-present: report-type),
+        (value: upper(about), when-present: about),
+        (value: research, when-present: research),
+        (value: [по теме:], when-rule: not bare-subject),
+        (value: upper(subject), when-present: subject),
+        (
+            value: [(#stage.type)],
+            when-rule: (stage.type != none and stage.num == none)),
+        (
+            value: [(#stage.type, этап #stage.num)], 
+            when-present: (stage.type, stage.num)
+        ),
+        (value: [\ Книга #part], when-present: part),
     )
 
-    if (approved-by.name, agreed-by.name).any(it => it != none) {
-        v(1fr)
-    }
-
-    align(center, {
-        upper(report-type)
-        [\ ]
-        upper(about)
-        if research != "" {
-            [\ #research]
-        }
-        [\ ]
-        if not bare-subject {
-            [по теме:]
-        }
-        [\ ]
-        upper(subject)
-        if stage != (type: none, num: none) {
-            [\ (#stage.type]
-            if stage.num != none {
-                [, этап #stage.num]
-            }
-            [)]
-        }
-        if part != none {
-            [\ \ Книга #part]
-        }
-    })
-
-    v(2fr)
-
-    if performer != none and not force-performers { // TODO: Подписывать как исполнителя
-        sign-field(performer.at("name"), performer.at("position"))
+    // TODO: Подписывать как исполнителя
+    if performer != none and not force-performers {
+        // TODO: Использовать fetch-fields
+        sign-field(performer.at("name", default: none), performer.at("position", default: none), part: performer.at("part", default: none))
     }
 
     if manager.name != none {
