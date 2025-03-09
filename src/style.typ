@@ -75,7 +75,7 @@
     #let page = here().page()
     #align(center)[#{
       if page == 1 {
-        if hide-title {} else {[#city #year]}
+        if hide-title {page} else {[#city #year]}
       } 
       else {page}
     }]

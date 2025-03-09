@@ -3,6 +3,7 @@
 
 tests/**/out/**
 tests/**/diff/**
+tests/**/.gitignore
 
 !assets/**/*.pdf
 !assets/**/*.png

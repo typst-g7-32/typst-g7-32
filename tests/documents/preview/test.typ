@@ -1,4 +1,4 @@
-#import "../../../src/export.typ": gost, abstract, annexes, annex-heading
+#import "/src/export.typ": gost, abstract, annexes, annex-heading
 #import "@preview/numberingx:0.0.1"
 
 #set text(font: "Times New Roman")
@@ -107,14 +107,12 @@ $ mat(1, 2, 3; 4, 5, 6; 7, 8, 9) * x = pi * psi(alef/x) $
 $ cal(A) := { x in RR | x "натуральное" } $
 <example-formula-third>
 
-
-
 == Изображения
 
 Изображения добавляются с помощью функции `image()` внутри макроса `#figure`. Пример вставки изображения указан на рисунке @example-image.
 
 #figure(
-  image("images/picture.jpg"),
+  image("/tests/assets/home.jpg", width: 60%),
   caption: "Пример изображения"
 ) <example-image>
 
@@ -157,14 +155,14 @@ $ cal(A) := { x in RR | x "натуральное" } $
 Пример вставки изображения в приложение указан на рисунке @annex-image.
 
 #figure(
-  image("images/picture.jpg", width: 40%),
+  image("/tests/assets/nature.jpg", width: 40%),
   caption: "Пример изображения"
 ) <annex-image>
 
 == Изображения в под-приложениях
 Пример вставки изображения в под-приложение указан на рисунке @annex-image-3.
 #figure(
-  image("images/picture.jpg", width: 40%),
+  image("/tests/assets/abstract.jpg", width: 40%),
   caption: "Пример изображения"
 ) <annex-image-3>
 
