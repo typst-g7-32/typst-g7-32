@@ -7,7 +7,7 @@
   for value in values.pos() {
     let rule = value != none
     if type(value) in (array, dictionary) {
-      let data = fetch-field(value, ("value*", "when-present"), default-values: (when-present: true), hint: "линии")
+      let data = fetch-field(value, ("value*", "when-present"), default: (when-present: true), hint: "линии")
       if data.when-present != true {
         rule = (data.when-present, ).flatten().all(elem => elem != none)
       }

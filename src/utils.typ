@@ -1,15 +1,15 @@
 #import "style.typ": small-text
 
-#let fetch-field(field, expected-keys, default-values: (:), hint: "") = {
+#let fetch-field(field, expected-keys, default: (:), hint: "") = {
   let expected-keys-arg-error = "Ожидаемые ключи должны быть списком строк, например '(arg1*, arg2), здесь arg1 - обязательный агрумент, а arg2 - необязательный'"
 
   assert(type(expected-keys) == array, message: expected-keys-arg-error)
   assert(expected-keys.map(elem => type(elem)).all(elem => elem == str), message: expected-keys-arg-error)
 
-  assert(type(default-values) == dictionary, message: "Стандартные значения должны быть определены в словаре, например: 'default-values: (arg1: false)'")
-  assert(default-values.len() <= expected-keys.len(), message: "Количество стандартных значений должно быть не больше числа ожидаемых аргументов")
+  assert(type(default) == dictionary, message: "Стандартные значения должны быть определены в словаре, например: 'default: (arg1: false)'")
+  assert(default.len() <= expected-keys.len(), message: "Количество стандартных значений должно быть не больше числа ожидаемых аргументов")
 
-  let get-default(key) = (key, default-values.at(key, default: none))
+  let get-default(key) = (key, default.at(key, default: none))
 
   let clean-expected-keys = expected-keys.map(key => key.replace("*", ""))
   let required-keys = expected-keys.filter(key => key.at(-1) == "*").map(key => key.slice(0, -1))
@@ -38,7 +38,7 @@
     assert(field.len() <= expected-keys.len(), message: "В списке " + hint + " указано слишком много аргументов, требуемые: " + repr(expected-keys))
     let result = (:)
     for (i, key) in clean-expected-keys.enumerate() {
-      result.insert(key, field.at(i, default: default-values.at(key, default: none)))
+      result.insert(key, field.at(i, default: default.at(key, default: none)))
     }
     return result
   }
