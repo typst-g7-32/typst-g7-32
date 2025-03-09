@@ -2,6 +2,9 @@
 #import "performers.typ": performers-page, fetch-performers
 
 #let detailed-sign-field(title, name, position, year) = {
+    assert(type(name) == str, message: "Некорректный тип поля name в detailed-sign-field, должен быть строкой")
+    assert(type(position) == str, message: "Некорректный тип поля position в detailed-sign-field, должен быть строкой")
+    assert(type(year) in (int, type(none)), message: "Некорректный тип поля year в detailed-sign-field, должен быть целым числом")
     table(
         stroke: none,
         align: left,
