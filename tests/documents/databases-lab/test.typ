@@ -1,18 +1,14 @@
-#import "/src/export.typ": gost, abstract
+#import "/src/export.typ": gost, abstract, title-templates
 
 #set text(font: "Times New Roman")
 
 #show: gost.with(
-  ministry: "Министерство науки и высшего образования Российской Федерации
-  Федеральное государственное бюджетное образовательное учреждение
-  высшего образования",
-  organization: (
-    full: "«Московский авиационный институт»", 
-    short: "МАИ"
-  ),
+  title-template: title-templates.mai-university-lab,
   performers: (
     (name: "Елисеев П.А.", position: "Студент М3О-221Б-23"),
   ),
+  institute: (number: 3, name: "Системы управления, информатика и электроэнергетика"),
+  department: (number: 307, name: "Цифровые технологии и информационные системы"),
   report-type: "отчёт",
   about: "О лабораторной работе", 
   bare-subject: false,

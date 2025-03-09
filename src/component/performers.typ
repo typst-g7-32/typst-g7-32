@@ -46,7 +46,6 @@
 
 #let performers-page(performers) = {
   heading(structural-heading-titles.performers, outlined: false)
-  let performers = fetch-performers(performers)
 
   let not-co-performers = performers.filter(performer => performer.co-performer == false)
   let co-performers = performers.filter(performer => performer.co-performer == true)

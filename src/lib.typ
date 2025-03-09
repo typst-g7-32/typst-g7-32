@@ -1,55 +1,46 @@
 #import "style.typ": gost-style
-#import "component/title.typ": title
-#import "title-templates/lib.typ": templates
+#import "component/title-templates.typ": templates
 #import "component/performers.typ": performers-page, fetch-performers
 
-#let gost-common(..arguments, title-template: templates.default) = {
-  arguments = arguments.named()
-  let hide-title = arguments.remove("hide-title")
-
+#let gost-common(title-template, title-arguments, city, year, hide-title, performers, force-performers) = {
   set par(justify: false)
+
+  title-arguments = title-arguments.named()
+
+  title-arguments.insert("year", year)
+
+  let show-performers-page = false
+  if performers != none {
+    performers = fetch-performers(performers)
+    if (performers.len() > 1 or force-performers) {
+      show-performers-page = true
+    } else {
+      title-arguments.insert("performer", performers.first())
+    }
+  }
 
   if not hide-title {
     block(
       width: 100%,
-      title(title-template, ..arguments),
+      title-template(..title-arguments),
       breakable: false,
     )
     pagebreak(weak: true)
   }
-
-  if arguments.performers != none and (arguments.performers.len() > 1 or arguments.force-performers) {
-    performers-page(arguments.performers)
-  }
+  
+  if show-performers-page { performers-page(performers) }
 }
 
 #let gost(
-  ministry: none,
-  organization: (full: none, short: none),
-  udk: none,
-  gos-no: none,
-  inventory-no: none,
-  performers: none,
-  approved-by: (name: none, position: none, year: auto),
-  agreed-by: (name: none, position: none, year: auto),
-  report-type: "Отчёт",
-  about: none, 
-  part: none,
-  bare-subject: false,
-  research: none,
-  subject: none,
-  stage: none,
-  manager: (position: none, name: none),
+  title-template: templates.default,
   city: none,
   year: auto,
-  force-performers: false,
   hide-title: false,
+  performers: none,
+  force-performers: false,
+  ..title-arguments,
   body
 ) = {
-  if year == auto {
-    year = int(datetime.today().display("[year]"))
-  }
-
   let table-counter = counter("table")
   let image-counter = counter("image")
   let citation-counter = counter("citation")
@@ -64,9 +55,13 @@
     it
   }
 
+  if year == auto {
+    year = int(datetime.today().display("[year]"))
+  }
+
   show: gost-style.with(year: year, city: city, hide-title: hide-title)
 
-  gost-common(ministry: ministry, organization: organization, udk: udk, gos-no: gos-no, inventory-no: inventory-no, performers: performers, approved-by: approved-by, agreed-by: agreed-by, report-type: report-type, about: about, part: part, bare-subject: bare-subject, research: research, subject: subject, stage: stage, manager: manager, city: city, year: year, force-performers: force-performers, hide-title: hide-title)
-  
+  gost-common(title-template, title-arguments, city, year, hide-title, performers, force-performers)
+
   body
 }

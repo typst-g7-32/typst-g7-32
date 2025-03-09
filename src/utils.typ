@@ -60,11 +60,13 @@
 }
 
 #let sign-field(name, position, part: none, details: "подпись, дата") = {
-
-  // TODO: Оптимизировать
-  let part-cell = if part != none { table.cell(align: top)[(#small-text[#part])] } else { [] }
-
-  return table(
+  let part-cell = []
+  if part != none { 
+    part-cell = table.cell(align: top)[(#small-text[#part])]
+  }
+  
+  set par(justify: false)
+  table(
     stroke: none,
     inset: (x: 0pt, y: 3pt),
     columns: (5fr, 1fr, 3fr, 1fr, 3fr),
