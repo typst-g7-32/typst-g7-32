@@ -11,8 +11,6 @@
 
   let get-default(key) = (key, default-values.at(key, default: none))
 
-  get-default("name")
-
   let clean-expected-keys = expected-keys.map(key => key.replace("*", ""))
   let required-keys = expected-keys.filter(key => key.at(-1) == "*").map(key => key.slice(0, -1))
   let not-required-keys = expected-keys.filter(key => key.at(-1) != "*")
@@ -40,7 +38,7 @@
     assert(field.len() <= expected-keys.len(), message: "В списке " + hint + " указано слишком много аргументов, требуемые: " + repr(expected-keys))
     let result = (:)
     for (i, key) in clean-expected-keys.enumerate() {
-      result.insert(key, field.at(i, default: get-default(key)))
+      result.insert(key, field.at(i, default: default-values.at(key, default: none)))
     }
     return result
   }
