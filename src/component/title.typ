@@ -17,11 +17,11 @@
 }
 
 #let prepare-title-info(document-arguments) = {
-    document-arguments.organization = fetch-field(document-arguments.organization, ("full*", "short*"), "организации")
-    document-arguments.agreed-by = fetch-field(document-arguments.agreed-by, ("name*", "position*", "year"), "утверждения")
-    document-arguments.approved-by = fetch-field(document-arguments.approved-by, ("name*", "position*", "year"), "согласования")
-    document-arguments.stage = fetch-field(document-arguments.stage, ("type*", "num"), "этапа")
-    document-arguments.manager = fetch-field(document-arguments.manager, ("position*", "name*"), "руководителя")
+    document-arguments.organization = fetch-field(document-arguments.organization, ("*full", "short"), hint: "организации")
+    document-arguments.agreed-by = fetch-field(document-arguments.agreed-by, ("name*", "position*", "year"), hint: "утверждения")
+    document-arguments.approved-by = fetch-field(document-arguments.approved-by, ("name*", "position*", "year"), hint: "согласования")
+    document-arguments.stage = fetch-field(document-arguments.stage, ("type*", "num"), hint: "этапа")
+    document-arguments.manager = fetch-field(document-arguments.manager, ("position*", "name*"), hint: "руководителя")
 
     if document-arguments.approved-by.year == auto {
         document-arguments.approved-by.year = document-arguments.year
@@ -30,10 +30,11 @@
         document-arguments.approved-by.year = document-arguments.year
     }
 
-    let title-performer = if document-arguments.performers != none and document-arguments.performers.len() == 1 {
-        document-arguments.performers.at(0)
+    let title-performer
+    if document-arguments.performers != none and document-arguments.performers.len() == 1 {
+        title-performer = document-arguments.performers.at(0)
     } else {
-        none
+        title-performer = none
     }
     let title-arguments = (:)
     for (key, value) in document-arguments {

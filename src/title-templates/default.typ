@@ -1,5 +1,6 @@
 #import "../component/title.typ": detailed-sign-field
 #import "../utils.typ": sign-field
+#import "utils.typ": if-present, per-line
 
 #let template(
     ministry: none,
@@ -22,25 +23,19 @@
     force-performers: false,
     force-outline: false,
 ) = {
-    align(center)[
-        #ministry\
-        #upper(organization.full)\
-        (#upper(organization.short))
-    ]
-
-    v(1fr)
-
-    grid(
-        align(left)[
-            #if udk != none [УДК: #udk\ ]
-            #if gos-no != none [Рег. №: #gos-no\ ]
-            #if inventory-no != none [Рег. № ИКРБС: #inventory-no\ ]
-        ],
+    per-line(
+        align: center,
+        ministry,
+        upper(organization.full),
+        (value: [(#organization.short)], when-present: organization.short),
     )
 
-    if (udk, gos-no, inventory-no).any(it => it != none) {
-        v(1fr)
-    }
+    per-line(
+        align: left,
+        (value: [УДК: #udk], when-present: udk),
+        (value: [Рег. №: #gos-no], when-present: gos-no),
+        (value: [Рег. № ИКРБС: #inventory-no], when-present: inventory-no),
+    )
 
     grid(
         columns: (1fr, 1fr),

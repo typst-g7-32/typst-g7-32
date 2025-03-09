@@ -1,7 +1,7 @@
 #import "component/headings.typ": headings, structural-heading-titles
 
 #let small-text = body => {
-  set text(size: 12pt)
+  set text(size: 10pt)
   body
 }
 
