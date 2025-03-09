@@ -1,14 +1,35 @@
 #import "headings.typ": structural-heading-titles
 
-
-#let get-count(kind, caption) = {
-  let target = none
-  if kind == page { target = page }
-  else { target = figure.where(kind: kind) }
-  let count = counter(target).final().first()
-  if count == none or count == 0 {
-    ""
+#let get-count(kind) = {
+  assert(kind in (page, image, table, ref, "annex"), message: "Невозможно определить количество этих элементов")
+  let target-counter = none
+  let caption = none
+  if kind == page { 
+    target-counter = counter(page)
+    caption = "с."
+  } else if kind == "annex" {
+    target-counter = counter("annex")
+    caption = "прил."
+  } else if kind == ref {
+    caption = "ист."
+  } else if kind == image {
+    target-counter = counter("image")
+    caption = "рис."
+  } else if kind == table {
+    target-counter = counter("table")
+    caption = "табл."
+  }
+  
+  let count = 0
+  if kind == cite {
+    count = target-counter.final().dedup().len()
+  } else if kind == ref {
+    count = query(selector(ref)).filter(it => it.element == none).map(it => it.target).dedup().len()
   } else {
+    count = target-counter.final().first()
+  }
+
+  if count != 0 {
     repr(count) + " " + caption
   }
 }
@@ -16,10 +37,10 @@
 #let abstract(..keywords, body) = {
   [
     #heading(structural-heading-titles.abstract, outlined: false) <abstract>
-    
+
     #context {
-      let counts = (get-count(page, "с."), get-count(image, "рис."), get-count(table, "табл."), get-count(ref, "источн."), get-count(none, "прил."))
-      counts = counts.filter(it => it != "")
+      let counts = (get-count(page), get-count(image), get-count(table), get-count(ref), get-count("annex"))
+      counts = counts.filter(it => it != none)
       [Отчёт #counts.join(", ")]
     } // TODO: Добавить расчёт количества источников и приложений
 

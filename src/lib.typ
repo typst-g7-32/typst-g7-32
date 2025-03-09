@@ -54,6 +54,20 @@
     year = int(datetime.today().display("[year]"))
   }
 
+  let table-counter = counter("table")
+  let image-counter = counter("image")
+  let citation-counter = counter("citation")
+  let annex-counter = counter("annex")
+
+  show figure.where(kind: image): it => {
+    image-counter.step()
+    it
+  }
+  show figure.where(kind: table): it => {
+    table-counter.step()
+    it
+  }
+
   [#metadata(force-outline) <force-outline>]
 
   show: gost-style.with(year: year, city: city, hide-title: hide-title)
