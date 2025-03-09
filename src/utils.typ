@@ -55,7 +55,8 @@
 }
 
 #let unbreak-name(name) = {
-    return name.replace(" ", "\u{00A0}")
+  if name == none { return }
+  return name.replace(" ", "\u{00A0}")
 }
 
 #let sign-field(name, position, part: none, details: "подпись, дата") = {
@@ -64,9 +65,9 @@
   let part-cell = if part != none { table.cell(align: top)[(#small-text[#part])] } else { [] }
 
   return table(
-    inset: (x: 0pt, y: 3pt),
     stroke: none,
-    columns: (45%, 5%, 1fr, 5%, 20%),
+    inset: (x: 0pt, y: 3pt),
+    columns: (5fr, 1fr, 3fr, 1fr, 3fr),
     [#position], [], [], [], table.cell(align: bottom)[#unbreak-name(name)],
     table.hline(start: 2, end: 3),
     [], [], table.cell(align: center)[#small-text[#details]], [], part-cell
