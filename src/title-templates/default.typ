@@ -22,6 +22,7 @@
     city: none,
     force-performers: false,
     force-outline: false,
+    hide-outline: false
 ) = {
     per-line(
         align: center,
