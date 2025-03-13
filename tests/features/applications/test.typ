@@ -1,6 +1,8 @@
 #import "/src/export.typ": gost, annexes, annex-heading
 
-#show: gost.with(hide-title: true, force-outline: true)
+#show: gost.with(hide-title: true)
+
+#outline()
 
 #show: annexes
 

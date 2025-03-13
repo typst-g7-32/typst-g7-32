@@ -21,7 +21,6 @@
     manager: (position: none, name: none),
     city: none,
     force-performers: false,
-    force-outline: false,
 ) = {
     per-line(
         ministry,

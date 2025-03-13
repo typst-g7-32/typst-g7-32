@@ -1,6 +1,8 @@
 #import "/src/export.typ": gost
 
-#show: gost.with(hide-title: true, force-outline: true)
+#show: gost.with(hide-title: true)
+
+#outline()
 
 = Введение
 

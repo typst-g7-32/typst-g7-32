@@ -42,22 +42,13 @@
       let counts = (get-count(page), get-count(image), get-count(table), get-count(ref), get-count("annex"))
       counts = counts.filter(it => it != none)
       [Отчёт #counts.join(", ")]
-    } // TODO: Добавить расчёт количества источников и приложений
+    }
 
     #{
       set par(first-line-indent: 0pt)
       upper(keywords.pos().join(", "))
     }
   
-    #text(body, )
-    
-    #context {
-      let force-outline-query = query(<force-outline>)
-      let force-outline = force-outline-query.len() > 0 and force-outline-query.first().value
-
-      if (counter(page).final().first() >= 10 or force-outline) and query(selector(heading)).len() > 0 {
-        outline()
-      }
-    }
+    #text(body)
   ]
 }

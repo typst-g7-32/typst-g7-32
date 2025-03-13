@@ -21,10 +21,6 @@
   if arguments.performers != none and (arguments.performers.len() > 1 or arguments.force-performers) {
     performers-page(arguments.performers)
   }
-
-  context if (counter(page).final().first() >= 10 or arguments.force-outline) and query(selector(heading)).len() > 0 and query(<abstract>).len() == 0 {
-    outline()
-  }
 }
 
 #let gost(
@@ -47,7 +43,6 @@
   city: none,
   year: auto,
   force-performers: false,
-  force-outline: false,
   hide-title: false,
   body
 ) = {
@@ -69,11 +64,9 @@
     it
   }
 
-  [#metadata(force-outline) <force-outline>]
-
   show: gost-style.with(year: year, city: city, hide-title: hide-title)
 
-  gost-common(ministry: ministry, organization: organization, udk: udk, gos-no: gos-no, inventory-no: inventory-no, performers: performers, approved-by: approved-by, agreed-by: agreed-by, report-type: report-type, about: about, part: part, bare-subject: bare-subject, research: research, subject: subject, stage: stage, manager: manager, city: city, year: year, force-performers: force-performers, force-outline: force-outline, hide-title: hide-title)
-
+  gost-common(ministry: ministry, organization: organization, udk: udk, gos-no: gos-no, inventory-no: inventory-no, performers: performers, approved-by: approved-by, agreed-by: agreed-by, report-type: report-type, about: about, part: part, bare-subject: bare-subject, research: research, subject: subject, stage: stage, manager: manager, city: city, year: year, force-performers: force-performers, hide-title: hide-title)
+  
   body
 }
