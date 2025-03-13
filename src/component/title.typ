@@ -21,8 +21,8 @@
 
 #let prepare-title-info(document-arguments) = {
     document-arguments.organization = fetch-field(document-arguments.organization, ("*full", "short"), hint: "организации")
-    document-arguments.agreed-by = fetch-field(document-arguments.agreed-by, ("name*", "position*", "year"), hint: "утверждения")
-    document-arguments.approved-by = fetch-field(document-arguments.approved-by, ("name*", "position*", "year"), hint: "согласования")
+    document-arguments.agreed-by = fetch-field(document-arguments.agreed-by, ("name*", "position*", "year"), default: ("year": auto), hint: "утверждения")
+    document-arguments.approved-by = fetch-field(document-arguments.approved-by, ("name*", "position*", "year"), default: ("year": auto), hint: "согласования")
     document-arguments.stage = fetch-field(document-arguments.stage, ("type*", "num"), hint: "этапа")
     document-arguments.manager = fetch-field(document-arguments.manager, ("position*", "name*"), hint: "руководителя")
 
