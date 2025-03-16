@@ -18,7 +18,7 @@
   set par(
     justify: true,
     first-line-indent: (
-      amount: 1.25cm,
+      amount: indent,
       all: true,
     ),
     spacing: 1.5em

@@ -9,16 +9,12 @@
   references: [Список использованных источников],
 )
 
-#let service-heading = it => {  
+#let structure-heading-style = it => {  
   align(center)[#upper(it)]
 }
 
-#let structural-headings = {
-  let result = (:)
-  for (name, title) in structural-heading-titles.pairs() {
-    result.insert(name, service-heading(title))
-  }
-  result
+#let structure-heading(body) = {
+  structure-heading-style(heading(numbering: none)[#body])
 }
 
 #let headings(text-size, indent) = body => {
@@ -43,7 +39,7 @@
   show structural-heading: set heading(numbering: none)
   show structural-heading: it => {
     pagebreak(weak: true)
-    service-heading(it)
+    structure-heading-style(it)
   }
 
   show heading: set block(below: 2em, above: 2em)

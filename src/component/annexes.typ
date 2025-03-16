@@ -21,6 +21,7 @@
 
   show heading: set align(center)
   show heading: it => {
+    assert(it.numbering != none, message: "В приложениях не может быть структурных заголовков или заголовков без нумерации")
     counter("annex").step()
     block[#upper([приложение]) #numbering(it.numbering, ..counter(heading).at(it.location())) \ #text(weight: "medium")[#it.body]]
   }
