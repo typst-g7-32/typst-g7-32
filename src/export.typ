@@ -3,3 +3,4 @@
 #import "component/abstract.typ": abstract
 #import "component/annexes.typ": annexes, annex-heading
 #import "component/headings.typ": structure-heading
+#import "component/custom-title-template.typ"
