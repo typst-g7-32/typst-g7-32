@@ -1,5 +1,5 @@
 #import "../utils.typ": fetch-field, unbreak-name
-#import "performers.typ": performers-page, fetch-performers
+#import "performers.typ": performers-page
 
 #let detailed-sign-field(title, name, position, year) = {
     assert(type(name) == str, message: "Некорректный тип поля name в detailed-sign-field, должен быть строкой")
@@ -19,40 +19,69 @@
     )
 }
 
-#let prepare-title-info(document-arguments) = {
-    document-arguments.organization = fetch-field(document-arguments.organization, ("*full", "short"), hint: "организации")
-    document-arguments.agreed-by = fetch-field(document-arguments.agreed-by, ("name*", "position*", "year"), default: ("year": auto), hint: "утверждения")
-    document-arguments.approved-by = fetch-field(document-arguments.approved-by, ("name*", "position*", "year"), default: ("year": auto), hint: "согласования")
-    document-arguments.stage = fetch-field(document-arguments.stage, ("type*", "num"), hint: "этапа")
-    document-arguments.manager = fetch-field(document-arguments.manager, ("position*", "name*"), hint: "руководителя")
+#let align-function = align
 
-    if document-arguments.approved-by.year == auto {
-        document-arguments.approved-by.year = document-arguments.year
-    }
-    if document-arguments.agreed-by.year == auto {
-        document-arguments.approved-by.year = document-arguments.year
-    }
-
-    let title-performer
-    if document-arguments.performers != none and document-arguments.performers.len() == 1 {
-        title-performer = document-arguments.performers.at(0)
+#let per-line(align: center, indent: v(1fr), force-indent: false, ..values) = {
+  let result = ()
+  for value in values.pos() {
+    let rule = false
+    if type(value) in (array, dictionary) {
+      let data = fetch-field(value, ("value*", "when-rule", "when-present"), default: (when-present: "any", when-rule: none), hint: "линии")
+      assert(not (data.when-rule != none and data.when-present != "any"), message: "Должно быть выбрано только одно правило пояивления when-rule или when-present")
+      if data.when-rule != none {
+        rule = data.when-rule
+      }
+      if data.when-present != "any" {
+        rule = (data.when-present, ).flatten().all(elem => elem != none)
+      }
+      value = data.value
     } else {
-        title-performer = none
+      rule = value != none
     }
-    let title-arguments = (:)
-    for (key, value) in document-arguments {
-        if key != "performers" {
-            title-arguments.insert(key, value)
-        }
+    if rule {
+      result.push(value)
     }
-    title-arguments.remove("year")
-    title-arguments.insert("performer", title-performer)
-    return title-arguments
+  }
+  
+  if result != () {
+    align-function(align)[
+      #grid[#for elem in result {[#elem \ ]}]
+    ]
+  }
+  if force-indent or result != () {
+    indent
+  }
 }
 
-#let title(template, ..arguments) = context {
-    let arguments = arguments.named()
-    let title-arguments = prepare-title-info(arguments)
+#let if-present(rule: array.all, indent: v(1fr), ..targets, body) = {
+  assert(rule in (array.all, array.any), message: "Правило сравнения указано неверно, должно быть array.all или array.any")
+  let check = (target => target != none)
+  if rule(targets.pos(), check) {
+    body
+    indent
+  }
+}
 
-    template(..title-arguments)
+#let approved-field(approved-by) = {
+  if approved-by.name != none [
+    #detailed-sign-field("согласовано", approved-by.name, approved-by.position, approved-by.year)
+  ]
+}
+
+#let agreed-field(agreed-by) = {
+  if agreed-by.name != none [
+    #detailed-sign-field("утверждаю", agreed-by.name, agreed-by.position, agreed-by.year)
+  ]
+}
+
+#let approved-and-agreed-fields(approved-by, agreed-by) = {
+  if-present(rule: array.any, approved-by.name, agreed-by.name)[
+    #grid(
+      columns: (1fr, 1fr),
+      align: (left, right),
+      gutter: 20%,
+      approved-field(approved-by),
+      agreed-field(agreed-by)
+    )
+  ]
 }

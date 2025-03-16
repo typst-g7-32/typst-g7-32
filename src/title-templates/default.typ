@@ -1,6 +1,22 @@
-#import "../component/title.typ": detailed-sign-field
-#import "../utils.typ": sign-field
-#import "utils.typ": per-line, approved-and-agreed-fields
+#import "../component/title.typ": detailed-sign-field, per-line, approved-and-agreed-fields
+#import "../utils.typ": sign-field, fetch-field
+
+#let arguments(..args, year: auto) = {
+    let args = args.named()
+    args.organization = fetch-field(args.at("organization", default: none), ("*full", "short"), hint: "организации")
+    args.agreed-by = fetch-field(args.at("agreed-by", default: none), ("name*", "position*", "year"), hint: "утверждения")
+    args.approved-by = fetch-field(args.at("approved-by", default: none), ("name*", "position*", "year"), hint: "согласования")
+    args.stage = fetch-field(args.at("stage", default: none), ("type*", "num"), hint: "этапа")
+    args.manager = fetch-field(args.at("manager", default: none), ("position*", "name*"), hint: "руководителя")
+
+    if args.approved-by.year == auto {
+        args.approved-by.year = year
+    }
+    if args.agreed-by.year == auto {
+        documenargst-arguments.approved-by.year = year
+    }
+    return args
+}
 
 #let template(
     ministry: none,
@@ -20,15 +36,16 @@
     stage: none,
     manager: (position: none, name: none),
     city: none,
-    force-performers: false,
 ) = {
     per-line(
+        force-indent: true,
         ministry,
         (value: upper(organization.full), when-present: organization.full),
         (value: [(#organization.short)], when-present: organization.short),
     )
 
     per-line(
+        force-indent: true,
         align: left,
         (value: [УДК: #udk], when-present: udk),
         (value: [Рег. №: #gos-no], when-present: gos-no),
@@ -55,14 +72,12 @@
         (value: [\ Книга #part], when-present: part),
     )
 
-    // TODO: Подписывать как исполнителя
-    if performer != none and not force-performers {
-        // TODO: Использовать fetch-fields
-        sign-field(performer.at("name", default: none), performer.at("position", default: none), part: performer.at("part", default: none))
+    if manager.name != none {
+        sign-field(manager.at("name"), [Руководитель НИР,\ #manager.at("position")])
     }
 
-    if manager.name != none {
-        sign-field(manager.at("name"), manager.at("position"))
+    if performer != none {
+        sign-field(performer.at("name", default: none), [Исполнитель НИР,\ #performer.at("position", default: none)], part: performer.at("part", default: none))
     }
 
     v(1fr)
