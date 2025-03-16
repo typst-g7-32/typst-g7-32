@@ -1,11 +1,11 @@
 [package]
-name = "typst-g7-32"
-version = "0.0.1"
+name = "modern-g7-32"
+version = "0.1.0"
 entrypoint = "src/export.typ"
 authors = ["Forgenet"]
 license = "MIT"
 description = "GOST 7.32-2017 template"
-repository = "https://github.com/f0rgenet/typst-g7-32"
+repository = "https://github.com/typst-g7-32/modern-g7-32"
 keywords = ["gost", "7.32", "2017", "science"]
 categories = ["cv"]
 exclude = [

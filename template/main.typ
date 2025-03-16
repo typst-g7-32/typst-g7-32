@@ -1,4 +1,4 @@
-#import "@preview/typst-g7-32:0.0.1": gost, abstract
+#import "@preview/modern-g7-32:0.1.0": gost, abstract
 
 #show: gost.with(
   ministry: "Министерство образования и науки Российской Федерации

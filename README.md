@@ -1,12 +1,12 @@
 <a href="https://typst.app/universe/package/modern-g7-32">![Typst Universe](https://img.shields.io/badge/dynamic/xml?url=https://typst.app/universe/package/modern-g7-32&query=/html/body/div/main/div[2]/aside/section[2]/dl/dd[3]&logo=typst&label=universe)</a>
-<a href="https://github.com/typst-g7-32/typst-g7-32/actions"><img src="https://github.com/typst-g7-32/typst-g7-32/actions/workflows/ci.yml/badge.svg" alt="License badge"></a>
-<a href="https://github.com/typst-g7-32/typst-g7-32/blob/main/LICENSE"><img src="https://img.shields.io/github/license/typst-g7-32/typst-g7-32" alt="License badge"></a>
+<a href="https://github.com/typst-g7-32/modern-g7-32/actions"><img src="https://github.com/typst-g7-32/modern-g7-32/actions/workflows/ci.yml/badge.svg" alt="License badge"></a>
+<a href="https://github.com/typst-g7-32/modern-g7-32/blob/main/LICENSE"><img src="https://img.shields.io/github/license/typst-g7-32/modern-g7-32" alt="License badge"></a>
 <a href="https://typst-gost.ru"><img src="https://img.shields.io/website?url=https%3A%2F%2Ftypst-gost.ru" alt="Website badge"></a>
 
 # Предпросмотр
 <p align="center">
-    <a href="template/main.typ"><img src="https://github.com/typst-g7-32/typst-g7-32/blob/preview/source.png" alt="Source" width="48%"></a>
-    <a href="https://github.com/typst-g7-32/typst-g7-32/blob/preview/main.pdf"><img src="https://github.com/typst-g7-32/typst-g7-32/blob/preview/preview.png" alt="Preview" width="48%"></a>
+    <a href="template/main.typ"><img src="https://github.com/typst-g7-32/modern-g7-32/blob/preview/source.png" alt="Source" width="48%"></a>
+    <a href="https://github.com/typst-g7-32/modern-g7-32/blob/preview/main.pdf"><img src="https://github.com/typst-g7-32/modern-g7-32/blob/preview/preview.png" alt="Preview" width="48%"></a>
 </p>
 
 # Шаблон для оформления документов по ГОСТ 7.32-2017 на Typst
@@ -26,7 +26,7 @@
 
 # Установка
 На данный момент доступно только локальное использование, поскольку шаблон не выложен в [Typst Universe](https://typst.app/universe/).
-Вы можете следить за прогрессом разработки версии для распространения [тут](https://github.com/typst-g7-32/typst-g7-32/milestone/1).
+Вы можете следить за прогрессом разработки версии для распространения [тут](https://github.com/typst-g7-32/modern-g7-32/milestone/1).
 
 ## На Linux
 
@@ -72,15 +72,15 @@ cargo install --locked typst-cli
 ```
 
 ### 4. Клонирование репозитория шаблона  
-Так как шаблон `typst-g7-32` ещё не опубликован, его необходимо временно добавить вручную в кэш пакетов Typst:  
+Так как шаблон `modern-g7-32` ещё не опубликован, его необходимо временно добавить вручную в кэш пакетов Typst:  
 ```sh
-git clone https://github.com/typst-g7-32/typst-g7-32 ~/.cache/typst/packages/preview/typst-g7-32/0.0.1
+git clone https://github.com/typst-g7-32/modern-g7-32 ~/.cache/typst/packages/preview/modern-g7-32/0.1.0
 ```
 
 ### 5. Создание проекта на основе шаблона  
-Теперь можно создать новый проект с использованием шаблона `typst-g7-32`:  
+Теперь можно создать новый проект с использованием шаблона `modern-g7-32`:  
 ```sh
-typst init @preview/typst-g7-32:0.0.1 my-gost-document
+typst init @preview/modern-g7-32:0.1.0 my-gost-document
 ```
 После выполнения этой команды в текущей директории появится директория `./my-gost-document`, содержащая подготовленный проект для работы с Typst по ГОСТ 7.32-2017.
 
@@ -101,14 +101,14 @@ cargo install --locked typst-cli
 ```
 3. Клонирование репозитория пакета (создаём необходимые директории)
 ```powershell
-$targetDir = "%LOCALAPPDATA%\typst\packages\preview\typst-g7-32\0.1.0"
+$targetDir = "%LOCALAPPDATA%\typst\packages\preview\modern-g7-32\0.1.0"
 New-Item -ItemType Directory -Force -Path $targetDir | Out-Null
-git clone https://github.com/typst-g7-32/typst-g7-32 $targetDir
+git clone https://github.com/typst-g7-32/modern-g7-32 $targetDir
 ```
 
 4. Инициализация документа с использованием клона preview-пакета
 ```powershell
-typst init @preview/typst-g7-32:0.1.0 my-gost-document
+typst init @preview/modern-g7-32:0.1.0 my-gost-document
 ```
 
 ## Установка tinymist
