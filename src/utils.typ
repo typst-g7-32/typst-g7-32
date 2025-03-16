@@ -1,4 +1,8 @@
-#import "style.typ": small-text
+#let small-text = body => context {
+  let target-size = query(<small-text-size>).first().value
+  set text(size: target-size)
+  body
+}
 
 #let fetch-field(field, expected-keys, default: (:), hint: "") = {
   let expected-keys-arg-error = "Ожидаемые ключи должны быть списком строк, например '(arg1*, arg2), здесь arg1 - обязательный агрумент, а arg2 - необязательный'"
@@ -43,7 +47,7 @@
     return result
   }
 
-  else if type(field) == str {
+  else if type(field) in (str, int, length) {
     let result = clean-expected-keys.map(get-default).to-dict()
     result.insert(clean-expected-keys.at(0), field)
     return result

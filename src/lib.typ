@@ -1,4 +1,5 @@
 #import "style.typ": gost-style
+#import "utils.typ": fetch-field
 #import "component/title-templates.typ": templates
 #import "component/performers.typ": performers-page, fetch-performers
 
@@ -33,6 +34,8 @@
 
 #let gost(
   title-template: templates.default,
+  text-size: (default: 14pt, small: 10pt),
+  indent: 1.25cm,
   city: none,
   year: auto,
   hide-title: false,
@@ -59,7 +62,9 @@
     year = int(datetime.today().display("[year]"))
   }
 
-  show: gost-style.with(year: year, city: city, hide-title: hide-title)
+  text-size = fetch-field(text-size, ("default*", "small"))
+
+  show: gost-style.with(text-size: text-size.default, small-text-size: text-size.small, indent: indent, year: year, city: city, hide-title: hide-title)
 
   gost-common(title-template, title-arguments, city, year, hide-title, performers, force-performers)
 

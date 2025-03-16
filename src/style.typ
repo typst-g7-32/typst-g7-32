@@ -1,15 +1,10 @@
 #import "component/headings.typ": headings,  structural-heading-titles
 #import "component/annexes.typ": is-heading-in-annex
 
-#let small-text = body => {
-  set text(size: 10pt)
-  body
-}
+#let gost-style(year: none, city: "", hide-title: false, text-size: 14pt, small-text-size: 10pt, indent: 1.25cm, body) = {
+  if small-text-size == none { small-text-size = text-size - 4pt }
+  [#metadata(small-text-size) <small-text-size>]
 
-#let indent = 1.25cm
-#let text-size = 14pt
-
-#let gost-style(year: none, city: "", hide-title: false, body) = {
   set page(
     margin: (left: 30mm, right: 15mm, top: 20mm, bottom: 20mm)
   )
@@ -23,7 +18,7 @@
   set par(
     justify: true,
     first-line-indent: (
-      amount: indent,
+      amount: 1.25cm,
       all: true,
     ),
     spacing: 1.5em
