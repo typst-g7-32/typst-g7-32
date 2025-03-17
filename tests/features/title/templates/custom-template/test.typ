@@ -1,15 +1,15 @@
-#import "/src/export.typ": gost, title-templates
+#import "/src/export.typ": gost, custom-title-template.from-module
+#import "template.typ" as custom-template
 
 #show: gost.with(
-  title-template: title-templates.mai-university-lab,
+  title-template: from-module(custom-template),
   institute: (number: 3, name: "Системы управления, информатика и электроэнергетика"),
   department: (number: 307, name: "Цифровые технологии и информационные системы"),
   performers: (
-    (name: "Лебедев П.А.", position: "Студент М3О-221Б-23"),
+    (name: "Елисеев П.А.", position: "Студент М3О-221Б-23"),
   ),
-
   bare-subject: false,
   subject: "Пользовательский интерфейс для работы с базой данных",
-  manager: (name: "Давыдов Ю.Б.", position: "Преподаватель, доцент кафедры 307"),
+  manager: (name: "Склеймин Ю.Б.", position: "Преподаватель, доцент кафедры 307"),
   city: "Москва",
 )

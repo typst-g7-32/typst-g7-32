@@ -4,6 +4,10 @@
     return (..arguments) => template(..arguments-function(..arguments))
 }
 
+#let custom-title-template(module) = {
+    title-template-factory(module.template, module.arguments)
+}
+
 #let templates = {
     let result = (:)
     for template in template-names {
