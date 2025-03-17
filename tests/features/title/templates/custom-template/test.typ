@@ -1,8 +1,8 @@
-#import "/src/export.typ": gost, custom-title-template
+#import "/src/export.typ": gost, custom-title-template.from-file
 #import "template.typ" as custom-template
 
 #show: gost.with(
-  title-template: custom-title-template.from-file(custom-template),
+  title-template: from-file(custom-template),
   institute: (number: 3, name: "Системы управления, информатика и электроэнергетика"),
   department: (number: 307, name: "Цифровые технологии и информационные системы"),
   performers: (
