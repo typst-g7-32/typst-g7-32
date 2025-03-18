@@ -19,7 +19,7 @@
         args.approved-by.year = year
     }
     if args.agreed-by.year == auto {
-        documenargst-arguments.approved-by.year = year
+        args.approved-by.year = year
     }
     return args
 }
