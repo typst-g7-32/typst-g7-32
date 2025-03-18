@@ -9,17 +9,36 @@
             full: "Московский авиационный институт", 
             short: "Национальный исследовательский университет"), 
         ("*full", "short"), 
-        hint: "организации")
-    args.agreed-by = fetch-field(args.at("agreed-by", default: none), ("name*", "position*", "year"), hint: "утверждения")
-    args.approved-by = fetch-field(args.at("approved-by", default: none), ("name*", "position*", "year"), hint: "согласования")
-    args.stage = fetch-field(args.at("stage", default: none), ("type*", "num"), hint: "этапа")
-    args.manager = fetch-field(args.at("manager", default: none), ("position*", "name*"), hint: "руководителя")
+        hint: "организации"
+    )
+    args.approved-by = fetch-field(
+        args.at("approved-by", default: none),
+        ("name*", "position*", "year"),
+        default: (year: auto),
+        hint: "согласования"
+    )
+    args.agreed-by = fetch-field(
+        args.at("agreed-by", default: none),
+        ("name*", "position*", "year"),
+        default: (year: auto),
+        hint: "утверждения"
+    )
+    args.stage = fetch-field(args.at(
+        "stage", default: none),
+        ("type*", "num"),
+        hint: "этапа"
+    )
+    args.manager = fetch-field(
+        args.at("manager", default: none),
+        ("position*", "name*"),
+        hint: "руководителя"
+    )
 
     if args.approved-by.year == auto {
         args.approved-by.year = year
     }
     if args.agreed-by.year == auto {
-        documenargst-arguments.approved-by.year = year
+        args.agreed-by.year = year
     }
     return args
 }
@@ -32,7 +51,9 @@
     ),
     institute: (number: none, name: none),
     department: (number: none, name: none),
-    performer: none,
+    udk: none,
+    research-number: none,
+    report-number: none,
     approved-by: (name: none, position: none, year: auto),
     agreed-by: (name: none, position: none, year: none),
     report-type: "Отчёт",
@@ -43,13 +64,13 @@
     subject: none,
     stage: none,
     manager: (position: none, name: none),
-    city: none,
+    performer: none,
 ) = {
     grid(
-        columns: (0.15fr, 1fr),
-        gutter: 10pt,
+        columns: (0.2fr, 1fr),
+        gutter: 5pt,
         inset: 0pt,
-        image("logo/mai.svg", width: 100%), 
+        grid.cell(align: top+center)[#image("logo/mai.svg", width: 100%)],
         grid.cell(align: horizon)[
             #per-line(
                 indent: none,
@@ -72,6 +93,13 @@
             when-present: (institute.number, institute.name)),
         (value: [Кафедра #department.number – «#department.name»],       
             when-present: (department.number, department.name)),
+    )
+
+    per-line(
+        align: left,
+        (value: [УДК: #udk], when-present: udk),
+        (value: [Рег. №: #research-number], when-present: research-number),
+        (value: [Рег. № ИКРБС: #report-number], when-present: report-number),
     )
     
     approved-and-agreed-fields(approved-by, agreed-by)
@@ -102,5 +130,5 @@
         sign-field(performer.at("name", default: none), [Выполнил:\ #performer.at("position", default: none)], part: performer.at("part", default: none))
     }
 
-    v(1fr)
+    v(0.5fr)
 }

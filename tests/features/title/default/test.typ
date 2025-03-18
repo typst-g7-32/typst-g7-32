@@ -8,8 +8,8 @@
     short: "ФГАОУ ВО НИ ТПУ"
   ),
   udk: "681.784.43-026.26(047.31)",
-  gos-no: "115123110194",
-  inventory-no: "20151114-НИР-005",
+  research-number: "115123110194",
+  report-number: "20151114-НИР-005",
   approved-by: (name: "А.Н. Дьяченко", position: "Проректор по научной работе и инновациям", year: auto),
   agreed-by: (name: "В.И. Дорожкин", position: "Директор ВНИИВСГЭ", year: 2017),
   report-type: "отчёт",
