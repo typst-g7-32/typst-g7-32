@@ -4,7 +4,7 @@ version = "0.1.0"
 entrypoint = "src/export.typ"
 authors = [
 	"Pavel Eliseev <forgenet@inbox.ru>",
-	"Arseniy Zasypkin <imcatcatcher@mail.ru>"
+	"Arseniy Zasypkin <imcatcatcher@internet.ru>"
 ]
 license = "GPL-3.0-only"
 description = "Template for academic documents in compliance with GOST 7.32‑2017"
