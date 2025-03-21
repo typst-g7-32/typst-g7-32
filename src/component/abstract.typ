@@ -34,11 +34,10 @@
   }
 }
 
-#let abstract(..keywords, body) = {
+#let abstract(count: true, ..keywords, body) = {
   [
     #heading(structural-heading-titles.abstract, outlined: false) <abstract>
-
-    #context {
+    #context if count {
       let counts = (get-count(page), get-count(image), get-count(table), get-count(ref), get-count("annex"))
       counts = counts.filter(it => it != none)
       [Отчёт #counts.join(", ")]
